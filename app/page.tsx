@@ -1,4 +1,4 @@
-import Button from "./components/Button";
+import Button from './components/Button';
 
 export default async function HomePage() {
   return (
