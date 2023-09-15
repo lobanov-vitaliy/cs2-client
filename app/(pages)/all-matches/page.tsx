@@ -1,3 +1,3 @@
-export default async function AllMatchesPage() {
+export default function AllMatchesPage() {
   return <div>AllMatchesPage</div>;
 }
