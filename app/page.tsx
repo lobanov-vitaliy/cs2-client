@@ -1,6 +1,6 @@
 import Button from './components/Button';
 
-export default function HomePage() {
+export default async function HomePage() {
   return (
     <div>
       <div>HomePage</div>
