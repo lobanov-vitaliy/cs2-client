@@ -1,3 +1,4 @@
+'use client';
 import React, { FC } from 'react';
 import { BodyProps, CardProps, FooterProps, HeaderProps } from './card.type';
 import cn from 'classnames';
