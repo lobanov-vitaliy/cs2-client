@@ -5,12 +5,12 @@ import { getMapTitle } from "@/app/utils/match";
 import Metadata from "@/app/components/Metadata";
 
 async function getMatch(id: string) {
-  const res = await fetch(`http://localhost:5000/matches/${id}`);
+  const res = await fetch(`${process.env.API_URL}/matches/${id}`);
   return res.json();
 }
 
 async function getScoreboard(id: string) {
-  const res = await fetch(`http://localhost:5000/matches/${id}/scoreboard`);
+  const res = await fetch(`${process.env.API_URL}/matches/${id}/scoreboard`);
   return res.json();
 }
 

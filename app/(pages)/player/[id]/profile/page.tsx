@@ -8,24 +8,24 @@ import MathesHistory from "./components/MathesHistory";
 import Metadata from "@/app/components/Metadata";
 
 async function getProfile(id: string) {
-  const res = await fetch(`http://localhost:5000/player/${id}`);
+  const res = await fetch(`${process.env.API_URL}/player/${id}`);
   return res.json();
 }
 
 async function getMatches(id: string) {
   const res = await fetch(
-    `http://localhost:5000/player/${id}/matches?limit=10`
+    `${process.env.API_URL}/player/${id}/matches?limit=10`
   );
   return res.json();
 }
 
 async function getTeammates(id: string) {
-  const res = await fetch(`http://localhost:5000/player/${id}/teammates`);
+  const res = await fetch(`${process.env.API_URL}/player/${id}/teammates`);
   return res.json();
 }
 
 async function getMaps(id: string) {
-  const res = await fetch(`http://localhost:5000/player/${id}/maps`);
+  const res = await fetch(`${process.env.API_URL}/player/${id}/maps`);
   return res.json();
 }
 
