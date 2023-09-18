@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import Card from '@/app/components/Card';
+import Card from "@/app/components/Card";
 
 export default function AllMatchesPage() {
   return (
@@ -10,7 +10,7 @@ export default function AllMatchesPage() {
       <Card>
         <Card.Header
           className="header-class"
-          onClose={() => console.log('click')}
+          onClose={() => console.log("click")}
           title="Good card"
         >
           header text
@@ -18,9 +18,9 @@ export default function AllMatchesPage() {
         <Card.Body>
           <h6 className="card-title">What planning process needs ?</h6>
           <p className="card-text text-muted mb-0">
-            Intrinsically incubate intuitive opportunities and real-time
+            {`Intrinsically incubate intuitive opportunities and real-time
             potentialities for change for interoperable meta-services itself or
-            distract the viewer's attention from the layout.
+            distract the viewer's attention from the layout.`}
           </p>
         </Card.Body>
         <Card.Footer>
