@@ -4,6 +4,7 @@ import Footer from "./components/Layout/Footer";
 import Header from "./components/Layout/Header";
 import Menu from "./components/Layout/Menu";
 import "./assets/scss/themes.scss";
+import classNames from "classnames";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -13,16 +14,7 @@ export const metadata: Metadata = {
 const materialdesignicons = localFont({
   src: [
     {
-      path: "./assets/fonts/materialdesignicons-webfont.eot",
-    },
-    {
-      path: "./assets/fonts/materialdesignicons-webfont.woff",
-    },
-    {
       path: "./assets/fonts/materialdesignicons-webfont.woff2",
-    },
-    {
-      path: "./assets/fonts/materialdesignicons-webfont.ttf",
     },
   ],
   variable: "--font-materialdesignicons",
@@ -50,10 +42,9 @@ export default function RootLayout({
     >
       <head>
         <meta charSet="utf-8" />
-        <title>CS2-stats</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
-      <body className={`${materialdesignicons.variable} font-sans`}>
+      <body className={classNames(materialdesignicons.variable)}>
         <div id="layout-wrapper">
           <Header />
           <Menu />

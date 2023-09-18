@@ -1,11 +1,10 @@
-'use client';
-import React, { FC } from 'react';
-import { BodyProps, CardProps, FooterProps, HeaderProps } from './card.type';
-import cn from 'classnames';
+import React, { FC } from "react";
+import { BodyProps, CardProps, FooterProps, HeaderProps } from "./card.type";
+import cn from "classnames";
 
 const Header: FC<HeaderProps> = ({ children, title, onClose, className }) => {
   return (
-    <div className={cn('card-header', className)}>
+    <div className={cn("card-header", className)}>
       {onClose && (
         <button
           type="button"
@@ -14,18 +13,22 @@ const Header: FC<HeaderProps> = ({ children, title, onClose, className }) => {
           onClick={onClose}
         />
       )}
-      {title && <div className={cn('card-title mb-0', className)}>{title}</div>}
+      {title && <div className={cn("card-title mb-0", className)}>{title}</div>}
       {children}
     </div>
   );
 };
 
-const Body: FC<BodyProps> = ({ children, className }) => {
-  return <div className={cn('card-body', className)}>{children}</div>;
+const Body: FC<BodyProps> = ({ children, className, style }) => {
+  return (
+    <div style={style} className={cn("card-body", className)}>
+      {children}
+    </div>
+  );
 };
 
 const Footer: FC<FooterProps> = ({ children, className }) => {
-  return <div className={cn('card-footer', className)}>{children}</div>;
+  return <div className={cn("card-footer", className)}>{children}</div>;
 };
 
 const Card: FC<CardProps> & {
@@ -37,11 +40,11 @@ const Card: FC<CardProps> & {
     <div
       {...props}
       className={cn(
-        'card',
+        "card",
         {
-          'card-animate': animate,
+          "card-animate": animate,
         },
-        className,
+        className
       )}
     >
       {children}
