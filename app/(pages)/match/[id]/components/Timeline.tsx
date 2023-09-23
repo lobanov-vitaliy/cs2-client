@@ -71,39 +71,6 @@ const items = [
   },
 ];
 
-export const options = {
-  responsive: true,
-  maintainAspectRatio: false,
-  plugins: {
-    legend: {
-      display: false,
-    },
-    title: {
-      display: false,
-    },
-  },
-  scales: {
-    x: {
-      border: {
-        display: true,
-      },
-      grid: {
-        display: false,
-      },
-    },
-    y: {
-      position: "right",
-      border: {
-        display: false,
-      },
-      grid: {
-        display: true,
-        color: "rgba(255,255,255,0.1)",
-      },
-    },
-  },
-};
-
 const Timeline: FC<{ match: any }> = ({ match }) => {
   const [type, setType] = useState("kills");
   const [data, setData] = useState<any>(null);
@@ -212,7 +179,43 @@ const Timeline: FC<{ match: any }> = ({ match }) => {
         <div className="col-9">
           <Card className="card-height-100">
             <Card.Body>
-              {data && <Line options={options} data={data} />}
+              {data && (
+                <Line
+                  options={{
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                      legend: {
+                        display: false,
+                      },
+                      title: {
+                        display: false,
+                      },
+                    },
+                    scales: {
+                      x: {
+                        border: {
+                          display: true,
+                        },
+                        grid: {
+                          display: false,
+                        },
+                      },
+                      y: {
+                        position: "right",
+                        border: {
+                          display: false,
+                        },
+                        grid: {
+                          display: true,
+                          color: "rgba(255,255,255,0.1)",
+                        },
+                      },
+                    },
+                  }}
+                  data={data}
+                />
+              )}
             </Card.Body>
           </Card>
         </div>
