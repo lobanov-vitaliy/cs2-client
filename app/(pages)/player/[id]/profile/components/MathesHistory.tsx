@@ -39,7 +39,7 @@ const MathesHistory: FC<MathesHistoryProps> = ({ matches }) => {
   return (
     <Card>
       <div className="table-responsive">
-        <table className="table table-nowrap table-striped align-middle caption-top table-borderless mb-0">
+        <table className="table table-nowrap table-striped table-sm align-middle caption-top table-borderless mb-0">
           <thead className="table-light">
             <tr>
               <th>Map</th>
@@ -90,7 +90,7 @@ const MathesHistory: FC<MathesHistoryProps> = ({ matches }) => {
                     "text-danger": match.kd < 1,
                   })}
                 >
-                  {Number(match.kd).toFixed(2)}%
+                  {Number(match.kd).toFixed(2)}
                 </td>
                 <td
                   className={classNames("text-center", {

@@ -40,7 +40,7 @@ const Card: FC<CardProps> & {
     <div
       {...props}
       className={cn(
-        "card",
+        "card border-dashed border-dark border-2",
         {
           "card-animate": animate,
         },

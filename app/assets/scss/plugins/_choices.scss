@@ -248,15 +248,12 @@
   overflow: hidden;
   word-break: break-all;
   will-change: visibility;
-  animation-duration: 0.3s;
-  animation-fill-mode: both;
-  transform: translateY(1px);
   &.is-active {
     visibility: visible;
-    animation-name: DropDownSlide;
   }
 
-  .choices__item--selectable.is-highlighted {
+  .choices__item--selectable.is-highlighted,
+  .choices__item--selectable:hover {
     background-color: var(--#{$prefix}tertiary-bg);
   }
 

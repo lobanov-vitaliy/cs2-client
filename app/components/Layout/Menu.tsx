@@ -1,6 +1,26 @@
+"use client";
+import classNames from "classnames";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+const links = [
+  {
+    title: "Home",
+    path: "/",
+  },
+  {
+    title: "Leaderboards",
+    path: "/leaderboards",
+  },
+  {
+    title: "Matches",
+    path: "/matches",
+  },
+];
 
 const Menu = () => {
+  const pathname = usePathname();
+
   return (
     <div className="app-menu navbar-menu">
       <div id="scrollbar">
@@ -10,21 +30,18 @@ const Menu = () => {
             <li className="menu-title">
               <span data-key="t-menu">Matches</span>
             </li>
-            <li className="nav-item">
-              <Link href="/" className="nav-link menu-link">
-                Home
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link href="/leaderboards" className="nav-link menu-link">
-                Leaderboards
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link href="/all-matches" className="nav-link menu-link">
-                All Matches
-              </Link>
-            </li>
+            {links.map((link) => (
+              <li key={link.path} className="nav-item">
+                <Link
+                  href={link.path}
+                  className={classNames("nav-link menu-link", {
+                    "text-body-emphasis": pathname === link.path,
+                  })}
+                >
+                  {link.title}
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
       </div>

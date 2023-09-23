@@ -18,14 +18,14 @@ type MapsProps = {
 const Maps: FC<MapsProps> = ({ maps }) => {
   return (
     <div className="row">
-      {maps.map((map) => {
+      {maps.slice(0, 6).map((map) => {
         const winrate = +Number((map.wins / map.matches) * 100).toFixed(0);
         const kd = +Number(map.kills / map.deaths).toFixed(2);
 
         return (
           <div
             key={map.map_name}
-            className="col-xl-2 col-lg-3 col-md-4 col-sm-12"
+            className="col-xl-2 col-lg-4 col-md-6 col-sm-12"
           >
             <Card>
               <Card.Body
@@ -46,10 +46,16 @@ const Maps: FC<MapsProps> = ({ maps }) => {
 
               <Card.Footer>
                 <div className="d-flex flex-column gap-1">
-                  <span className="text-center fs-5">
-                    {`WINRATE: ${winrate}%`}
+                  <span className="text-center">
+                    <span>Winrate: </span>
+                    <span
+                      className={classNames({
+                        "text-success": winrate > 50,
+                        "text-danger": winrate < 50,
+                      })}
+                    >{`${winrate}%`}</span>
                   </span>
-                  <span className="text-center">MATCHES: {map.matches}</span>
+                  <span className="text-center">Matches: {map.matches}</span>
                   <span className="text-center">
                     K/D:{" "}
                     <span
