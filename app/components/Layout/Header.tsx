@@ -1,6 +1,7 @@
-import Image from "next/image";
-import MainSearch from "../MainSearch";
-import Link from "next/link";
+import Image from 'next/image';
+import MainSearch from '../MainSearch';
+import Link from 'next/link';
+import LanguageSwitcher from '../LanguageSwitcher';
 
 const Header = () => {
   return (
@@ -16,6 +17,7 @@ const Header = () => {
               </Link>
             </div>
             <MainSearch />
+            <LanguageSwitcher />
           </div>
         </div>
       </div>

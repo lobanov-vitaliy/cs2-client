@@ -1,27 +1,31 @@
-import localFont from "next/font/local";
-import Footer from "./components/Layout/Footer";
-import Header from "./components/Layout/Header";
-import classNames from "classnames";
-import NProgress from "./components/NProgress";
-import "./assets/scss/themes.scss";
+import localFont from 'next/font/local';
+import Footer from './components/Layout/Footer';
+import Header from './components/Layout/Header';
+import classNames from 'classnames';
+import NProgress from './components/NProgress';
+import './assets/scss/themes.scss';
+import getIntl from './components/providers/ServerIntlProvider/intl';
+import { currentLocale } from 'next-i18n-router';
+import ServerIntlProvider from './components/providers/ServerIntlProvider';
 
 const materialdesignicons = localFont({
   src: [
     {
-      path: "./assets/fonts/materialdesignicons-webfont.woff2",
+      path: './assets/fonts/materialdesignicons-webfont.woff2',
     },
   ],
-  variable: "--font-materialdesignicons",
+  variable: '--font-materialdesignicons',
 });
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const intl = await getIntl();
   return (
     <html
-      lang="en"
+      lang={currentLocale()}
       data-layout="horizontal"
       data-topbar="light"
       data-sidebar-size="lg"
@@ -44,16 +48,18 @@ export default function RootLayout({
         ></meta>
       </head>
       <body className={classNames(materialdesignicons.variable)}>
-        <NProgress />
-        <div id="layout-wrapper">
-          <Header />
-          <div className="main-content">
-            <div className="page-content">
-              <div className="container-fluid">{children}</div>
+        <ServerIntlProvider messages={intl.messages} locale={intl.locale}>
+          <NProgress />
+          <div id="layout-wrapper">
+            <Header />
+            <div className="main-content">
+              <div className="page-content">
+                <div className="container-fluid">{children}</div>
+              </div>
+              <Footer />
             </div>
-            <Footer />
           </div>
-        </div>
+        </ServerIntlProvider>
       </body>
     </html>
   );

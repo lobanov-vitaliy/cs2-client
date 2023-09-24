@@ -10,8 +10,9 @@
   },
   "dependencies": {
     "@types/node": "20.5.9",
-    "@types/react": "18.2.21",
+    "@types/react": "^18.2.22",
     "@types/react-dom": "18.2.7",
+    "@types/react-intl": "^3.0.0",
     "bootstrap": "^5.3.1",
     "chart.js": "^4.4.0",
     "classnames": "^2.3.2",
@@ -19,12 +20,14 @@
     "eslint": "8.48.0",
     "eslint-config-next": "13.4.19",
     "next": "13.4.19",
+    "next-i18n-router": "^4.0.0",
     "next13-progressbar": "^1.0.3",
     "nextjs-progressbar": "^0.0.16",
     "react": "18.2.0",
     "react-chartjs-2": "^5.2.0",
     "react-countup": "^6.4.2",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-intl": "^6.4.7"
   },
   "devDependencies": {
     "node-sass": "^9.0.0",
