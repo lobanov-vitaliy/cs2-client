@@ -1,19 +1,20 @@
-"use client";
+'use client';
 
-import classNames from "classnames";
-import { FC } from "react";
+import classNames from 'classnames';
+import { FC } from 'react';
+import { useIntl } from 'react-intl';
 
 const items = [
   {
-    title: "Overall",
+    title: 'Overall',
     type: 0,
   },
   {
-    title: "CT Side",
+    title: 'CT Side',
     type: 3,
   },
   {
-    title: "T Side",
+    title: 'T Side',
     type: 2,
   },
 ];
@@ -22,6 +23,8 @@ const SideSwicher: FC<{ value: number; onChange: (value: number) => void }> = ({
   value,
   onChange,
 }) => {
+  const { $t } = useIntl();
+
   return (
     <ul className="nav nav-pills card-header-pills mb-1 navbar-toggler nav-dark">
       {items.map(({ title, type }) => (
@@ -30,12 +33,12 @@ const SideSwicher: FC<{ value: number; onChange: (value: number) => void }> = ({
             onClick={() => {
               onChange(type);
             }}
-            className={classNames("nav-link", {
+            className={classNames('nav-link', {
               active: value === type,
-              "cursor-pointer": value !== type,
+              'cursor-pointer': value !== type,
             })}
           >
-            {title}
+            {$t({ id: title })}
           </span>
         </li>
       ))}
