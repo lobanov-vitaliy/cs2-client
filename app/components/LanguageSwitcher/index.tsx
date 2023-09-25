@@ -9,29 +9,29 @@ import i18nConfig from '@/i18nConfig';
 import Button from '../Button';
 import classNames from 'classnames';
 
+const languages: {
+  title: string;
+  code: 'en' | 'uk';
+  image: string;
+}[] = [
+  {
+    title: 'English',
+    code: 'en',
+    image: '/assets/flags/en.svg',
+  },
+  {
+    title: 'Українська',
+    code: 'uk',
+    image: '/assets/flags/uk.svg',
+  },
+];
+
 const LanguageSwitcher = () => {
   const router = useRouter();
   const currentPathname = usePathname();
   const currentLocale =
     useCurrentLocale(i18nConfig) || i18nConfig.defaultLocale;
   const [isOpen, setIsOpen] = useState(false);
-
-  const languages: {
-    title: string;
-    code: 'en' | 'uk';
-    image: string;
-  }[] = [
-    {
-      title: 'English',
-      code: 'en',
-      image: '/assets/flags/en.svg',
-    },
-    {
-      title: 'Українська',
-      code: 'uk',
-      image: '/assets/flags/uk.svg',
-    },
-  ];
 
   const handleChangeLanguage = (e: MouseEvent<HTMLDivElement>) => {
     const newLocale = e.currentTarget.getAttribute('data-lang');
