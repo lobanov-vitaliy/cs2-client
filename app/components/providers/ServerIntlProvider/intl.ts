@@ -8,7 +8,12 @@ export default async function getIntl() {
   return createIntl({
     locale: locale,
     messages: await fetch(
-      `${process.env.TRANSLATION_HOST}/api/translations/cs/front/${locale}/file/`
+      `${process.env.TRANSLATION_HOST}/api/translations/cs/front/${locale}/file/`,
+      {
+        headers: {
+          Authorization: "Token wlu_wWRPRAWfKKd2RFC3Nt9bEpVECfj3Qo7kHN6W",
+        },
+      }
     ).then((res) => res.json()),
   });
 }
