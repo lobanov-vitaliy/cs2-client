@@ -2,12 +2,14 @@ import MatchHeader from "../components/MatchHeader";
 import Сlutches from "../components/Сlutches";
 
 async function getMatch(id: string) {
-  const res = await fetch(`${process.env.API_URL}/matches/${id}`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/matches/${id}`);
   return res.json();
 }
 
 async function getClutches(id: string) {
-  const res = await fetch(`${process.env.API_URL}/matches/${id}/clutches`);
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/matches/${id}/clutches`
+  );
   return res.json();
 }
 

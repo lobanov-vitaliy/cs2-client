@@ -1,6 +1,7 @@
 import { FC } from "react";
 import Card from "@/app/components/Card";
 import classNames from "classnames";
+import getIntl from "@/components/providers/ServerIntlProvider/intl";
 
 type ClutchesProps = {
   clutches: Array<{
@@ -10,7 +11,9 @@ type ClutchesProps = {
   }>;
 };
 
-const Clutches: FC<ClutchesProps> = ({ clutches }) => {
+const Clutches: FC<ClutchesProps> = async ({ clutches }) => {
+  const { $t } = await getIntl();
+
   return (
     <div className="row row-cols-lg-5">
       {[...new Array(5)]
@@ -33,7 +36,9 @@ const Clutches: FC<ClutchesProps> = ({ clutches }) => {
                   <div className="fs-1 border border-2 p-4 rounded-circle">
                     1v{clutch.vs}
                   </div>
-                  <div className="fs-5 text-muted">Clutches won</div>
+                  <div className="fs-5 text-muted">
+                    {$t({ id: "common.Clutches won" })}
+                  </div>
                   <div className="d-flex align-items-center gap-2">
                     <span className="fs-2">
                       {clutch.wins}/{clutch.attempts}

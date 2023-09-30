@@ -9,12 +9,14 @@ import OpeningDuelsTable from "./components/OpeningDuelsTable";
 import OpeningDuels from "./components/OpeningDuels";
 
 async function getMatch(id: string) {
-  const res = await fetch(`${process.env.API_URL}/matches/${id}`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/matches/${id}`);
   return res.json();
 }
 
 async function getOpeningDuels(id: string) {
-  const res = await fetch(`${process.env.API_URL}/matches/${id}/opening-duels`);
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/matches/${id}/opening-duels`
+  );
   return res.json();
 }
 

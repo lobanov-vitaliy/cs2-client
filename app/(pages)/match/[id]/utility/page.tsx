@@ -1,7 +1,7 @@
 import MatchHeader from "../components/MatchHeader";
 
 async function getMatch(id: string) {
-  const res = await fetch(`${process.env.API_URL}/matches/${id}`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/matches/${id}`);
   return res.json();
 }
 

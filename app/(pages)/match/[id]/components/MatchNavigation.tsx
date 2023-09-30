@@ -4,12 +4,13 @@ import classNames from "classnames";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FC } from "react";
+import { useIntl } from "react-intl";
 
 const tabs = [
   {
-    title: (match: any) => (
+    title: ($t: any, match: any) => (
       <div className="d-flex gap-1 align-items-center">
-        <span>Scoreboard</span>
+        <span>{$t({ id: "common.Scoreboard" })}</span>
         <span className="d-flex">
           <span
             className={classNames({
@@ -34,29 +35,30 @@ const tabs = [
     path: "",
   },
   {
-    title: (match: any) => "Timeline",
+    title: ($t: any, match: any) => $t({ id: "common.Timeline" }),
     path: "/timeline",
   },
   {
-    title: (match: any) => "Clutches",
+    title: ($t: any, match: any) => $t({ id: "common.Clutches" }),
     path: "/clutches",
   },
   {
-    title: (match: any) => "Utility",
+    title: ($t: any, match: any) => $t({ id: "common.Utility" }),
     path: "/utility",
   },
   {
-    title: (match: any) => "Activity",
+    title: ($t: any, match: any) => $t({ id: "common.Activity" }),
     path: "/activity",
   },
   {
-    title: (match: any) => "Opening Duels",
+    title: ($t: any, match: any) => $t({ id: "common.Opening Duels" }),
     path: "/opening-duels",
   },
 ];
 
 const MatchNavigation: FC<{ match: any }> = ({ match }) => {
   const pathname = usePathname();
+  const { $t } = useIntl();
   return (
     <ul className="border-bottom-0 nav nav-custom-light nav-light nav-tabs-custom">
       {tabs.map(({ path, title }) => {
@@ -69,7 +71,7 @@ const MatchNavigation: FC<{ match: any }> = ({ match }) => {
               })}
               href={url}
             >
-              {title(match)}
+              {title($t, match)}
             </Link>
           </li>
         );

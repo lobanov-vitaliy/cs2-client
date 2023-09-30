@@ -5,7 +5,7 @@ import { TEAM_PLAYER_COLOR } from "@/app/consts";
 import classNames from "classnames";
 import Link from "next/link";
 
-export const getColumns = (team: any): TypeColumn[] => [
+export const getColumns = (team: any, $t: any): TypeColumn[] => [
   {
     id: "name",
     options: {
@@ -14,7 +14,7 @@ export const getColumns = (team: any): TypeColumn[] => [
     Header: "",
     Cell: (row: any) => (
       <Link
-        href={`/player/${row.steamid}/profile`}
+        href={`/player/${row.steamid}`}
         className="d-flex align-items-center d-flex justify-content-center  justify-content-md-start gap-2"
       >
         <Avatar
@@ -36,7 +36,7 @@ export const getColumns = (team: any): TypeColumn[] => [
       width: 90,
       sorting: true,
     },
-    Header: "Kills",
+    Header: $t({ id: "common.Kills" }),
     Cell: (row: any) => row.kills,
   },
   {
@@ -46,7 +46,7 @@ export const getColumns = (team: any): TypeColumn[] => [
       width: 90,
       sorting: true,
     },
-    Header: "Deaths",
+    Header: $t({ id: "common.Deaths" }),
     Cell: (row: any) => row.deaths,
   },
   {
@@ -56,7 +56,7 @@ export const getColumns = (team: any): TypeColumn[] => [
       width: 90,
       sorting: true,
     },
-    Header: "Assists",
+    Header: $t({ id: "common.Assists" }),
     Cell: (row: any) => row.assists,
   },
   {
@@ -66,7 +66,7 @@ export const getColumns = (team: any): TypeColumn[] => [
       width: 90,
       sorting: true,
     },
-    Header: "ADR",
+    Header: $t({ id: "common.ADR" }),
     Cell: (row: any) => `${(row.adr || 0).toFixed(0)}`,
   },
   {
@@ -76,7 +76,7 @@ export const getColumns = (team: any): TypeColumn[] => [
       width: 90,
       sorting: true,
     },
-    Header: "K / D",
+    Header: $t({ id: "common.K/D" }),
     Cell: (row: any) => (
       <div
         className={classNames("text-center", {
@@ -95,7 +95,7 @@ export const getColumns = (team: any): TypeColumn[] => [
       width: 90,
       sorting: true,
     },
-    Header: "HS %",
+    Header: $t({ id: "common.HS" }) + "%",
     Cell: (row: any) => `${(row.hs || 0).toFixed(1)}%`,
   },
   {
@@ -105,7 +105,7 @@ export const getColumns = (team: any): TypeColumn[] => [
       width: 90,
       sorting: true,
     },
-    Header: "Kast %",
+    Header: $t({ id: "common.Kast" }) + "%",
     Cell: (row: any) => `${(row.kasts || 0).toFixed(1)}%`,
   },
   {

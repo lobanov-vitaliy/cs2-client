@@ -149,7 +149,7 @@ const Timeline: FC<{ match: any }> = ({ match }) => {
                         <tr key={player.steamid}>
                           <td>
                             <Link
-                              href={`/player/${player.steamid}/profile`}
+                              href={`/player/${player.steamid}`}
                               className="d-flex align-items-center d-flex justify-content-center  justify-content-md-start gap-2"
                             >
                               <Avatar

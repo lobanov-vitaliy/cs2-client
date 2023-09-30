@@ -5,6 +5,9 @@ import Image from "next/image";
 import { format } from "date-fns";
 import Link from "next/link";
 import { getMapTitle } from "@/app/utils/match";
+import { useIntl } from "react-intl";
+import getIntl from "@/components/providers/ServerIntlProvider/intl";
+import Rank from "@/components/Rank";
 
 type MathesHistoryProps = {
   matches: Array<{
@@ -35,21 +38,24 @@ type MathesHistoryProps = {
   }>;
 };
 
-const MathesHistory: FC<MathesHistoryProps> = ({ matches }) => {
+const MathesHistory: FC<MathesHistoryProps> = async ({ matches }) => {
+  const { $t } = await getIntl();
   return (
     <Card>
       <div className="table-responsive">
         <table className="table table-nowrap table-striped table-sm align-middle caption-top table-borderless mb-0">
           <thead className="table-light">
             <tr>
-              <th>Map</th>
-              <th className="text-center">Date</th>
-              <th className="text-center">Score</th>
-              <th className="text-center">Rank</th>
-              <th className="text-center">Kills</th>
-              <th className="text-center">Deaths</th>
-              <th className="text-center">K/D</th>
-              <th className="text-center">HS%</th>
+              <th>{$t({ id: "common.Map" })}</th>
+              <th className="text-center">{$t({ id: "common.Date" })}</th>
+              <th className="text-center">{$t({ id: "common.Score" })}</th>
+              <th className="text-center" style={{ width: 50 }}>
+                {$t({ id: "common.Rank" })}
+              </th>
+              <th className="text-center">{$t({ id: "common.Kills" })}</th>
+              <th className="text-center">{$t({ id: "common.Deaths" })}</th>
+              <th className="text-center">{$t({ id: "common.K/D" })}</th>
+              <th className="text-center">{$t({ id: "common.HS" })}%</th>
               <th className="text-center" style={{ width: 60 }}>
                 Source
               </th>
@@ -81,7 +87,9 @@ const MathesHistory: FC<MathesHistoryProps> = ({ matches }) => {
                 >
                   {match.scores.join(":")}
                 </td>
-                <td className="text-center">{match.rank}</td>
+                <td className="text-center">
+                  <Rank value={match.rank} />
+                </td>
                 <td className="text-center">{match.kills}</td>
                 <td className="text-center">{match.deaths}</td>
                 <td
@@ -106,7 +114,7 @@ const MathesHistory: FC<MathesHistoryProps> = ({ matches }) => {
                     className="link-primary"
                     href={`/match/${match.match_id}`}
                   >
-                    View
+                    {$t({ id: "common.View" })}
                   </Link>
                 </td>
               </tr>

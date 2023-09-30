@@ -13,11 +13,6 @@
 
 .dropdown-menu {
   box-shadow: $box-shadow-lg;
-  animation-name: DropDownSlide;
-  animation-duration: 0.3s;
-  animation-fill-mode: both;
-  position: absolute;
-  z-index: 1000;
 
   &.dropdown-megamenu {
     padding: 20px;

@@ -12,6 +12,7 @@ import {
 import { Radar } from "react-chartjs-2";
 import Card from "@/app/components/Card";
 import { getMapTitle } from "@/app/utils/match";
+import { useIntl } from "react-intl";
 
 ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Legend);
 
@@ -28,6 +29,7 @@ type MapsRadarProps = {
 };
 
 const MapsRadar: FC<MapsRadarProps> = ({ maps }) => {
+  const { $t } = useIntl();
   const max = Math.max(
     ...maps.map((map) => map.wins),
     ...maps.map((map) => map.matches - map.wins),
@@ -41,7 +43,7 @@ const MapsRadar: FC<MapsRadarProps> = ({ maps }) => {
             labels: maps.map((map) => map.map_name),
             datasets: [
               {
-                label: "Matches",
+                label: $t({ id: "common.Matches" }),
                 data: maps.map((map) => map.matches + 1),
                 backgroundColor: "rgba(255, 255, 255, 0.05)",
                 borderColor: "rgba(255, 255, 255, 0.3)",
@@ -49,7 +51,7 @@ const MapsRadar: FC<MapsRadarProps> = ({ maps }) => {
                 pointStyle: false,
               },
               {
-                label: "Loss",
+                label: $t({ id: "common.Loss" }),
                 data: maps.map((map) => map.matches - map.wins + 1),
                 backgroundColor: "rgba(237, 94, 94, 0.4)",
                 borderColor: "rgba(237, 94, 94, 0.8)",
@@ -57,7 +59,7 @@ const MapsRadar: FC<MapsRadarProps> = ({ maps }) => {
                 pointStyle: false,
               },
               {
-                label: "Wins",
+                label: $t({ id: "common.Wins" }),
                 data: maps.map((map) => map.wins + 1),
                 backgroundColor: "rgba(19, 197, 107, 0.4)",
                 borderColor: "rgba(19, 197, 107, 0.8)",

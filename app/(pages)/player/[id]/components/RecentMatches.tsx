@@ -5,6 +5,7 @@ import Image from "next/image";
 import { format } from "date-fns";
 import { getMapTitle } from "@/app/utils/match";
 import Link from "next/link";
+import getIntl from "@/components/providers/ServerIntlProvider/intl";
 
 type RecentMatchesProps = {
   matches: Array<{
@@ -35,15 +36,16 @@ type RecentMatchesProps = {
   }>;
 };
 
-const RecentMatches: FC<RecentMatchesProps> = ({ matches }) => {
+const RecentMatches: FC<RecentMatchesProps> = async ({ matches }) => {
+  const { $t } = await getIntl();
   return (
     <div className="row">
       {matches.map((match: any) => {
-        let title = "DRAW";
+        let title = $t({ id: "common.Draw" });
         if (match.result === "win") {
-          title = "VICTORY";
+          title = $t({ id: "common.Victory" });
         } else if (match.result === "loss") {
-          title = "DEFEAT";
+          title = $t({ id: "common.Defeat" });
         }
         return (
           <Link
@@ -73,7 +75,7 @@ const RecentMatches: FC<RecentMatchesProps> = ({ matches }) => {
                   />
                   <div className="align-items-baseline d-flex flex-column gap-1">
                     <div className="fs-3 bg-dark rounded-2 d-flex gap-2 p-2">
-                      <span>{title}</span>
+                      <span className="text-uppercase">{title}</span>
                       <span
                         className={classNames({
                           "text-success": match.result === "win",
@@ -93,10 +95,11 @@ const RecentMatches: FC<RecentMatchesProps> = ({ matches }) => {
               <Card.Footer>
                 <div className="align-items-center justify-content-between fs-5 d-flex gap-1">
                   <span className="text-center">
-                    KDA: {[match.kills, match.deaths, match.assists].join("/")}
+                    {$t({ id: "common.KDA" })}:{" "}
+                    {[match.kills, match.deaths, match.assists].join("/")}
                   </span>
                   <span className="text-center">
-                    K / D:{" "}
+                    {$t({ id: "common.K/D" })}:{" "}
                     <span
                       className={classNames({
                         "text-success": match.kd >= 1,
@@ -105,7 +108,7 @@ const RecentMatches: FC<RecentMatchesProps> = ({ matches }) => {
                     >{`${match.kd.toFixed(2)}`}</span>
                   </span>
                   <span className="text-center">
-                    HS: {`${match.hs.toFixed(1)}%`}
+                    {$t({ id: "common.HS" })}: {`${match.hs.toFixed(1)}%`}
                   </span>
                 </div>
               </Card.Footer>

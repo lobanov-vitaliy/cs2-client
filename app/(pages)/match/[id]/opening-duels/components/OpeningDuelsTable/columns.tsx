@@ -13,7 +13,7 @@ export const getColumns = (team: any): TypeColumn[] => [
     Header: team.name,
     Cell: (row: any) => (
       <Link
-        href={`/player/${row.steamid}/profile`}
+        href={`/player/${row.steamid}`}
         className="d-flex align-items-center d-flex justify-content-center  justify-content-md-start gap-2"
       >
         <Avatar

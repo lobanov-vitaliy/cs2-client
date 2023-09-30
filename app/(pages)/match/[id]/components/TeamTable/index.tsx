@@ -4,6 +4,7 @@ import Table from "@/app/components/Table";
 import { getColumns } from "./columns";
 import Rank from "@/app/components/Rank";
 import classNames from "classnames";
+import { useIntl } from "react-intl";
 
 type TeamTableProps = {
   loading?: boolean;
@@ -55,7 +56,8 @@ const TeamTable: FC<TeamTableProps> = ({
   onSort,
   loading = false,
 }) => {
-  const columns = useMemo(() => getColumns(team), [team]);
+  const { $t } = useIntl();
+  const columns = useMemo(() => getColumns(team, $t), [team, $t]);
   return (
     <Card className="mb-lg-0 mb-2">
       <div className="align-items-center d-flex">

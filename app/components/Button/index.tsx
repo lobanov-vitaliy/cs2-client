@@ -4,28 +4,28 @@ import React, {
   ReactElement,
   cloneElement,
   createElement,
-} from 'react';
-import { ButtonProps } from './button.type';
-import classNames from 'classnames';
+} from "react";
+import { ButtonProps } from "./button.type";
+import classNames from "classnames";
 
 const Button: FC<
   ButtonProps & React.ButtonHTMLAttributes<HTMLButtonElement>
 > = ({
   children,
   border = false,
-  type = 'button',
-  color = 'primary',
-  variant = 'primary',
+  type = "button",
+  color = "primary",
+  variant = "primary",
   ...props
 }) => {
   return (
     <button
       {...props}
       type={type}
-      className={classNames('btn', {
-        'btn-border': border,
-        [`btn-${color}`]: variant === 'primary',
-        [`btn-${variant}-${color}`]: variant !== 'primary',
+      className={classNames("btn", props.className, {
+        "btn-border": border,
+        [`btn-${color}`]: variant === "primary",
+        [`btn-${variant}-${color}`]: variant !== "primary",
       })}
     >
       {children}
@@ -73,7 +73,7 @@ const Card: FC<
   return (
     <div
       className={classNames(className, {
-        'card-animate': animate,
+        "card-animate": animate,
       })}
     >
       {HeaderA &&

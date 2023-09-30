@@ -1,20 +1,20 @@
-'use client';
+"use client";
 
-import classNames from 'classnames';
-import { FC } from 'react';
-import { useIntl } from 'react-intl';
+import classNames from "classnames";
+import { FC } from "react";
+import { useIntl } from "react-intl";
 
 const items = [
   {
-    title: 'Overall',
+    title: "common.Overall",
     type: 0,
   },
   {
-    title: 'CT Side',
+    title: "common.CT Side",
     type: 3,
   },
   {
-    title: 'T Side',
+    title: "common.T Side",
     type: 2,
   },
 ];
@@ -33,9 +33,9 @@ const SideSwicher: FC<{ value: number; onChange: (value: number) => void }> = ({
             onClick={() => {
               onChange(type);
             }}
-            className={classNames('nav-link', {
+            className={classNames("nav-link", {
               active: value === type,
-              'cursor-pointer': value !== type,
+              "cursor-pointer": value !== type,
             })}
           >
             {$t({ id: title })}

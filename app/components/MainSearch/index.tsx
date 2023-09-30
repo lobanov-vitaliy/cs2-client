@@ -5,8 +5,10 @@ import { TEAM_PLAYER_COLOR } from "@/app/consts";
 import Link from "next/link";
 import Avatar from "../Avatar";
 import classNames from "classnames";
+import { useIntl } from "react-intl";
 
 const MainSearch = () => {
+  const { $t } = useIntl();
   const ref = useRef<HTMLInputElement>(null);
   const [value, setValue] = useState("");
   const deferredValue = useDeferredValue(value);
@@ -34,8 +36,8 @@ const MainSearch = () => {
   }, [deferredValue]);
 
   return (
-    <form className="app-search flex-grow-1">
-      <div className="position-relative">
+    <form className="app-search flex-grow-1 ">
+      <div className="position-relative d-none d-md-block">
         <input
           ref={ref}
           type="text"
@@ -44,7 +46,7 @@ const MainSearch = () => {
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           onChange={(e) => setValue(e.target.value)}
-          placeholder="Search for a player (Steam ID / Steam Profile Link / Custom Steam URL)"
+          placeholder={$t({ id: "search.placeholder" })}
           autoComplete="off"
         />
         <span className="mdi mdi-magnify search-widget-icon" />
@@ -63,7 +65,7 @@ const MainSearch = () => {
                 className="choices__item choices__item--choice choices__item--selectable"
               >
                 <Link
-                  href={`/player/${player.steamid}/profile`}
+                  href={`/player/${player.steamid}`}
                   onClick={() => {
                     handleClear();
                   }}

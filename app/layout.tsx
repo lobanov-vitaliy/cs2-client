@@ -1,20 +1,20 @@
-import localFont from 'next/font/local';
-import Footer from './components/Layout/Footer';
-import Header from './components/Layout/Header';
-import classNames from 'classnames';
-import NProgress from './components/NProgress';
-import './assets/scss/themes.scss';
-import getIntl from './components/providers/ServerIntlProvider/intl';
-import { currentLocale } from 'next-i18n-router';
-import ServerIntlProvider from './components/providers/ServerIntlProvider';
+import localFont from "next/font/local";
+import classNames from "classnames";
+import NProgress from "./components/NProgress";
+import getIntl from "./components/providers/ServerIntlProvider/intl";
+import { currentLocale } from "next-i18n-router";
+import ServerIntlProvider from "./components/providers/ServerIntlProvider";
+import SessionProvider from "./components/providers/Session";
+import { getSession } from "./actions/session";
+import "./assets/scss/themes.scss";
 
 const materialdesignicons = localFont({
   src: [
     {
-      path: './assets/fonts/materialdesignicons-webfont.woff2',
+      path: "./assets/fonts/materialdesignicons-webfont.woff2",
     },
   ],
-  variable: '--font-materialdesignicons',
+  variable: "--font-materialdesignicons",
 });
 
 export default async function RootLayout({
@@ -23,6 +23,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const intl = await getIntl();
+  const session = await getSession();
   return (
     <html
       lang={currentLocale()}
@@ -41,6 +42,7 @@ export default async function RootLayout({
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" type="image/png" href="/favicon.png" />
         <title>CS2 Stats & Accomplishments</title>
         <meta
           name="description"
@@ -50,15 +52,7 @@ export default async function RootLayout({
       <body className={classNames(materialdesignicons.variable)}>
         <ServerIntlProvider messages={intl.messages} locale={intl.locale}>
           <NProgress />
-          <div id="layout-wrapper">
-            <Header />
-            <div className="main-content">
-              <div className="page-content">
-                <div className="container-fluid">{children}</div>
-              </div>
-              <Footer />
-            </div>
-          </div>
+          <SessionProvider session={session}>{children}</SessionProvider>
         </ServerIntlProvider>
       </body>
     </html>

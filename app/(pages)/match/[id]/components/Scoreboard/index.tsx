@@ -5,6 +5,7 @@ import SideSwicher from "@/app/components/SideSwicher";
 import TeamTable from "../TeamTable";
 import Rounds from "./Rounds";
 import Card from "@/app/components/Card";
+import { useIntl } from "react-intl";
 
 type ScoreboardProps = {
   match: any;
@@ -25,11 +26,12 @@ const Scoreboard: FC<ScoreboardProps> = ({ match, rounds }) => {
   const [side, setSide] = useState(0);
   const [sort, setSort] = useState<any>();
   const [scoreboard, setScoreboard] = useState<any[] | null>(null);
+  const { $t } = useIntl();
 
   const teams = useMemo(() => {
     return match.teams.map((team: any, i: number) => ({
       ...team,
-      name: team.name || "Team " + (i ? "B" : "A"),
+      name: team.name || $t({ id: "common.Team" }) + " " + (i ? "B" : "A"),
       players: team.players
         .map((player: any) => ({
           ...player,

@@ -2,7 +2,7 @@ import MatchHeader from "../components/MatchHeader";
 import Activity from "../components/Activity";
 
 async function getMatch(id: string) {
-  const res = await fetch(`${process.env.API_URL}/matches/${id}`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/matches/${id}`);
   return res.json();
 }
 

@@ -1,12 +1,8 @@
 import Metadata from "@/app/components/Metadata";
 import { getMapTitle } from "@/app/utils/match";
-import classNames from "classnames";
 import Image from "next/image";
 import { FC } from "react";
 import MatchNavigation from "./MatchNavigation";
-import Avatar from "@/app/components/Avatar";
-import Card from "@/app/components/Card";
-import { TEAM_PLAYER_COLOR } from "@/app/consts";
 import { format } from "date-fns";
 
 const MatchHeader: FC<{ match: any }> = ({ match }) => {

@@ -3,6 +3,8 @@ import classNames from "classnames";
 import { getMapTitle } from "@/app/utils/match";
 import AnimatedNumber from "@/app/components/AnimatedNumber";
 import StatsOverviewChart from "./StatsOverviewChart";
+import { useIntl } from "react-intl";
+import getIntl from "@/components/providers/ServerIntlProvider/intl";
 
 type StatsOverviewProps = {
   profile: {
@@ -27,7 +29,8 @@ type StatsOverviewProps = {
   };
 };
 
-const StatsOverview: FC<StatsOverviewProps> = ({ profile }) => {
+const StatsOverview: FC<StatsOverviewProps> = async ({ profile }) => {
+  const { $t } = await getIntl();
   const winrate = +Number((profile.wins / profile.matches) * 100).toFixed(2);
   const kd = +Number(profile.kills / profile.deaths).toFixed(2);
   const hs = +Number((profile.headshots / profile.kills) * 100).toFixed(2);
@@ -40,7 +43,9 @@ const StatsOverview: FC<StatsOverviewProps> = ({ profile }) => {
             <div className="row row-cols-xxl-6 row-cols-md-3 row-cols-1 g-0">
               <div className="col">
                 <div className="p-3">
-                  <h5 className="text-muted text-uppercase fs-13">Matches</h5>
+                  <h5 className="text-muted text-uppercase fs-13">
+                    {$t({ id: "common.Matches" })}
+                  </h5>
                   <h2 className="mb-0">
                     <AnimatedNumber start={0} end={profile.matches} />
                   </h2>
@@ -48,7 +53,9 @@ const StatsOverview: FC<StatsOverviewProps> = ({ profile }) => {
               </div>
               <div className="col">
                 <div className="p-3 position-relative">
-                  <h5 className="text-muted text-uppercase fs-13">Winrate</h5>
+                  <h5 className="text-muted text-uppercase fs-13">
+                    {$t({ id: "common.Winrate" })}
+                  </h5>
                   <h2
                     className={classNames("mb-0", {
                       "text-success": winrate > 50,
@@ -66,7 +73,9 @@ const StatsOverview: FC<StatsOverviewProps> = ({ profile }) => {
               </div>
               <div className="col">
                 <div className="p-3">
-                  <h5 className="text-muted text-uppercase fs-13">K/D</h5>
+                  <h5 className="text-muted text-uppercase fs-13">
+                    {$t({ id: "common.K/D" })}
+                  </h5>
                   <div className="d-flex gap-1">
                     <h2
                       className={classNames("mb-0", {
@@ -98,7 +107,9 @@ const StatsOverview: FC<StatsOverviewProps> = ({ profile }) => {
               </div>
               <div className="col">
                 <div className="p-3 position-relative">
-                  <h5 className="text-muted text-uppercase fs-13">Headshots</h5>
+                  <h5 className="text-muted text-uppercase fs-13">
+                    {$t({ id: "common.Headshots" })}
+                  </h5>
                   <div className="d-flex gap-1">
                     <h2 className="mb-0">
                       <AnimatedNumber
@@ -132,13 +143,17 @@ const StatsOverview: FC<StatsOverviewProps> = ({ profile }) => {
               </div>
               <div className="col">
                 <div className="p-3 position-relative">
-                  <h5 className="text-muted text-uppercase fs-13">Top map</h5>
+                  <h5 className="text-muted text-uppercase fs-13">
+                    {$t({ id: "common.Top map" })}
+                  </h5>
                   <h2 className="mb-0">{getMapTitle(profile.top_map_name)}</h2>
                 </div>
               </div>
               <div className="col">
                 <div className="p-3">
-                  <h5 className="text-muted text-uppercase fs-13">Best Rank</h5>
+                  <h5 className="text-muted text-uppercase fs-13">
+                    {$t({ id: "common.Best Rank" })}
+                  </h5>
                   <div className="d-flex gap-1">
                     <h2 className="mb-0">
                       <AnimatedNumber start={0} end={profile.top_rank} />

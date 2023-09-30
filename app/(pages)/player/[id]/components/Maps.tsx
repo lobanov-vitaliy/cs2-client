@@ -2,6 +2,7 @@ import { FC } from "react";
 import Card from "@/app/components/Card";
 import classNames from "classnames";
 import Image from "next/image";
+import getIntl from "@/components/providers/ServerIntlProvider/intl";
 
 type MapsProps = {
   maps: Array<{
@@ -15,7 +16,8 @@ type MapsProps = {
   }>;
 };
 
-const Maps: FC<MapsProps> = ({ maps }) => {
+const Maps: FC<MapsProps> = async ({ maps }) => {
+  const { $t } = await getIntl();
   return (
     <div className="row">
       {maps.slice(0, 6).map((map) => {
@@ -47,7 +49,7 @@ const Maps: FC<MapsProps> = ({ maps }) => {
               <Card.Footer>
                 <div className="d-flex flex-column gap-1">
                   <span className="text-center">
-                    <span>Winrate: </span>
+                    <span>{$t({ id: "common.Winrate" })}: </span>
                     <span
                       className={classNames({
                         "text-success": winrate > 50,
@@ -55,9 +57,11 @@ const Maps: FC<MapsProps> = ({ maps }) => {
                       })}
                     >{`${winrate}%`}</span>
                   </span>
-                  <span className="text-center">Matches: {map.matches}</span>
                   <span className="text-center">
-                    K/D:{" "}
+                    {$t({ id: "common.Matches" })}: {map.matches}
+                  </span>
+                  <span className="text-center">
+                    {$t({ id: "common.K/D" })}:{" "}
                     <span
                       className={classNames("text-center", {
                         "text-success": kd >= 1,

@@ -2,12 +2,14 @@ import MatchHeader from "./components/MatchHeader";
 import Scoreboard from "./components/Scoreboard";
 
 async function getMatch(id: string) {
-  const res = await fetch(`${process.env.API_URL}/matches/${id}`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/matches/${id}`);
   return res.json();
 }
 
 async function getRounds(id: string) {
-  const res = await fetch(`${process.env.API_URL}/matches/${id}/rounds`);
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/matches/${id}/rounds`
+  );
   return res.json();
 }
 
