@@ -166,6 +166,9 @@ const Popover: FC<PopoverProps> = ({
     if (triggerRef.current) {
       observer.observe(triggerRef.current);
     }
+    if (poperRef.current) {
+      observer.observe(poperRef.current);
+    }
 
     return () => {
       if (popper) {

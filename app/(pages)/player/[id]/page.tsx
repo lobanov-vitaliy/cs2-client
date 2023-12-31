@@ -6,12 +6,14 @@ import RecentMatches from "./components/RecentMatches";
 import StatsOverview from "./components/StatsOverview";
 import MathesHistory from "./components/MathesHistory";
 import Metadata from "@/app/components/Metadata";
-import Rank from "@/app/components/Rank";
 import Clutches from "./components/Clutches";
 import Card from "@/app/components/Card";
 import MapsRadar from "./components/MapsRadar";
-import { notFound } from "next/navigation";
 import getIntl from "@/components/providers/ServerIntlProvider/intl";
+import { notFound } from "next/navigation";
+import Weapons from "./components/Weapons";
+
+export const dynamic = "force-dynamic";
 
 async function getProfile(id: string) {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/player/${id}`);
@@ -23,7 +25,7 @@ async function getProfile(id: string) {
 
 async function getMatches(id: string) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/player/${id}/matches?limit=10`
+    `${process.env.NEXT_PUBLIC_API_URL}/player/${id}/matches?limit=20`
   );
   return res.json();
 }
@@ -49,17 +51,25 @@ async function getClutches(id: string) {
   return res.json();
 }
 
+async function getWeapons(id: string) {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/player/${id}/weapons`
+  );
+  return res.json();
+}
+
 export default async function PlayerProfilePage({
   params: { id },
 }: {
   params: { id: string };
 }) {
   const profile = await getProfile(id);
-  const [matches, teammates, maps, clutches] = await Promise.all([
+  const [matches, teammates, maps, clutches, weapons] = await Promise.all([
     getMatches(id),
     getTeammates(id),
     getMaps(id),
     getClutches(id),
+    getWeapons(id),
   ]);
   const { $t } = await getIntl();
 
@@ -78,7 +88,6 @@ export default async function PlayerProfilePage({
         <div className="col">
           <div className="p-2">
             <h3 className="text-white mb-1">{profile.name}</h3>
-            <Rank value={profile.rank} />
           </div>
         </div>
         <div className="col col-auto">
@@ -160,6 +169,9 @@ export default async function PlayerProfilePage({
         </div>
       </div>
 
+      <h2 className="text-uppercase">{$t({ id: "common.Weapon" })}</h2>
+      <Weapons weapons={weapons} />
+
       <div className="row">
         <div className="col-12 col-xl-3">
           <h2 className="text-uppercase">{$t({ id: "common.Maps Radar" })}</h2>
@@ -171,8 +183,12 @@ export default async function PlayerProfilePage({
         </div>
       </div>
 
-      <h2 className="text-uppercase">{$t({ id: "common.Mathes History" })}</h2>
-      <MathesHistory matches={matches.data} />
+      <MathesHistory
+        id={id}
+        matches={matches.data}
+        maps={maps}
+        teammates={teammates}
+      />
     </div>
   );
 }

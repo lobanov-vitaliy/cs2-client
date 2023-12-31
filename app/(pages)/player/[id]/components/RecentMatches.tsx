@@ -6,6 +6,7 @@ import { format } from "date-fns";
 import { getMapTitle } from "@/app/utils/match";
 import Link from "next/link";
 import getIntl from "@/components/providers/ServerIntlProvider/intl";
+import { MATCH_MODE } from "@/app/consts";
 
 type RecentMatchesProps = {
   matches: Array<{
@@ -58,7 +59,6 @@ const RecentMatches: FC<RecentMatchesProps> = async ({ matches }) => {
                 <span>
                   {format(new Date(match.datetime), "yyyy-MM-dd HH:mm")}
                 </span>
-                <span>Matchmaking</span>
               </Card.Header>
               <Card.Body
                 style={{

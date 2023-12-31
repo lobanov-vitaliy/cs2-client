@@ -1,14 +1,18 @@
 "use client";
 
-import { FC, useEffect, useMemo, useState } from "react";
+import { FC, useMemo, useState } from "react";
 import SideSwicher from "@/app/components/SideSwicher";
 import TeamTable from "../TeamTable";
 import Rounds from "./Rounds";
-import Card from "@/app/components/Card";
 import { useIntl } from "react-intl";
+import { useMatch } from "../../context";
+import Avatar from "@/components/Avatar";
+import Card from "@/components/Card";
+import useUpdateEffect from "@/app/hooks/useUpdateEffect";
 
 type ScoreboardProps = {
-  match: any;
+  leaders: any;
+  scoreboard: any;
   rounds: Array<{
     round_number: number;
     winner_team_number: number;
@@ -22,11 +26,16 @@ type ScoreboardProps = {
   }>;
 };
 
-const Scoreboard: FC<ScoreboardProps> = ({ match, rounds }) => {
+const Scoreboard: FC<ScoreboardProps> = ({
+  rounds,
+  leaders,
+  scoreboard: defaultScoreboard,
+}) => {
+  const { $t } = useIntl();
+  const match = useMatch();
   const [side, setSide] = useState(0);
   const [sort, setSort] = useState<any>();
-  const [scoreboard, setScoreboard] = useState<any[] | null>(null);
-  const { $t } = useIntl();
+  const [scoreboard, setScoreboard] = useState<any[]>(defaultScoreboard);
 
   const teams = useMemo(() => {
     return match.teams.map((team: any, i: number) => ({
@@ -51,7 +60,7 @@ const Scoreboard: FC<ScoreboardProps> = ({ match, rounds }) => {
     }));
   }, [match, scoreboard, sort, rounds]);
 
-  useEffect(() => {
+  useUpdateEffect(() => {
     const fetchScoreboard = async () => {
       let params: Record<string, string> = {};
 
@@ -73,6 +82,38 @@ const Scoreboard: FC<ScoreboardProps> = ({ match, rounds }) => {
 
   return (
     <div className="mb-4">
+      <div className="d-flex align-items-center gap-3">
+        {(leaders || []).map((leader: any, index: number) => {
+          console.log("leader", leader);
+          const player = match.players.find(
+            (player: any) => player.steamid === leader.steamid
+          );
+          return (
+            <Card
+              bordered={false}
+              key={player.steamid}
+              className="flex-grow-1 my-3"
+              style={{
+                border: `1px solid ${["#d4af37", "#c0c0c0", "#cd7f32"][index]}`,
+              }}
+            >
+              <div className="d-flex align-items-center justify-content-between gap-1  p-2">
+                <div className="d-flex align-items-center gap-2">
+                  <Avatar size="xs" src={player.avatar} />
+                  <div className="fs-5">{player.name}</div>
+                </div>
+                <div className="d-flex align-items-center gap-3 text-muted">
+                  <div>
+                    {[leader.kills, leader.deaths, leader.assists].join(" / ")}
+                  </div>
+                  <div>{leader.hltv_rating.toFixed(2)}</div>
+                </div>
+              </div>
+            </Card>
+          );
+        })}
+      </div>
+
       <SideSwicher value={side} onChange={setSide} />
 
       <TeamTable
@@ -81,7 +122,7 @@ const Scoreboard: FC<ScoreboardProps> = ({ match, rounds }) => {
         loading={scoreboard === null}
         team={teams[0]}
       />
-      <Rounds rounds={rounds} />
+      <Rounds rounds={rounds} match={match} />
       <TeamTable
         sort={sort}
         onSort={setSort}

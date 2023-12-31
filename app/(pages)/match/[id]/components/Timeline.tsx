@@ -19,7 +19,10 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import Link from "next/link";
-import Rank from "@/app/components/Rank";
+import { useMatch } from "../context";
+import { MatchRank } from "@/components/Rank";
+import { useIntl } from "react-intl";
+import { createPortal } from "react-dom";
 
 ChartJS.register(
   CategoryScale,
@@ -71,7 +74,9 @@ const items = [
   },
 ];
 
-const Timeline: FC<{ match: any }> = ({ match }) => {
+const Timeline: FC = () => {
+  const { $t } = useIntl();
+  const match = useMatch();
   const [type, setType] = useState("kills");
   const [data, setData] = useState<any>(null);
 
@@ -125,7 +130,7 @@ const Timeline: FC<{ match: any }> = ({ match }) => {
                 "cursor-pointer": value !== type,
               })}
             >
-              {title}
+              {$t({ id: `common.${title}` })}
             </span>
           </li>
         ))}
@@ -161,7 +166,7 @@ const Timeline: FC<{ match: any }> = ({ match }) => {
                                   }`,
                                 }}
                               />
-                              <Rank value={player.rank} />
+                              <MatchRank value={player.rank} />
                               <h5 className="fs-13 mb-0 d-none d-md-block">
                                 {player.name}
                               </h5>
@@ -184,12 +189,21 @@ const Timeline: FC<{ match: any }> = ({ match }) => {
                   options={{
                     responsive: true,
                     maintainAspectRatio: false,
+                    interaction: {
+                      intersect: false,
+                      mode: "index",
+                    },
+
                     plugins: {
                       legend: {
                         display: false,
                       },
                       title: {
                         display: false,
+                      },
+
+                      tooltip: {
+                        enabled: false,
                       },
                     },
                     scales: {

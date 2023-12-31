@@ -1,8 +1,10 @@
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, CSSProperties } from "react";
 
 export type CardProps = PropsWithChildren<{
   className?: string;
   animate?: boolean;
+  bordered?: boolean;
+  style?: CSSProperties;
 }>;
 
 export type HeaderProps = PropsWithChildren<{

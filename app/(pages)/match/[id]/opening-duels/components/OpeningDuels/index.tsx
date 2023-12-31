@@ -3,6 +3,7 @@
 import { FC, useMemo, useState } from "react";
 import OpeningDuelsTable from "../OpeningDuelsTable";
 import SideSwicher from "@/app/components/SideSwicher";
+import { useMatch } from "../../../context";
 
 type OpeningDuelsProps = {
   openingDuels: {
@@ -25,11 +26,10 @@ type OpeningDuelsProps = {
       team_number: number;
     }>;
   };
-
-  match: any;
 };
 
-const OpeningDuels: FC<OpeningDuelsProps> = ({ match, openingDuels }) => {
+const OpeningDuels: FC<OpeningDuelsProps> = ({ openingDuels }) => {
+  const match = useMatch();
   const [side, setSide] = useState(0);
   const [sort, setSort] = useState<any>();
 

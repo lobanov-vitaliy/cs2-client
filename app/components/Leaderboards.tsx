@@ -32,7 +32,6 @@ const Leaderboards = ({ data }: any) => {
                 className="d-flex align-items-center d-flex justify-content-center  justify-content-md-start gap-2"
               >
                 <Avatar src={row.avatar} size="xs" />
-                <Rank value={row.rank} />
                 <h5 className="fs-13 mb-0 d-none d-md-block">{row.name}</h5>
               </Link>
             ),
@@ -97,7 +96,7 @@ const Leaderboards = ({ data }: any) => {
           },
           {
             id: "headshots",
-            Header: "HS %",
+            Header: "%HS",
             options: {
               align: "center",
               width: 150,

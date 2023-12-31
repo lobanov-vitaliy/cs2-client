@@ -5,6 +5,7 @@ import AnimatedNumber from "@/app/components/AnimatedNumber";
 import StatsOverviewChart from "./StatsOverviewChart";
 import { useIntl } from "react-intl";
 import getIntl from "@/components/providers/ServerIntlProvider/intl";
+import { sum } from "@/app/utils/number";
 
 type StatsOverviewProps = {
   profile: {
@@ -13,7 +14,9 @@ type StatsOverviewProps = {
     deaths: number;
     assists: number;
     headshots: number;
-    top_rank: number;
+    played_rounds: number;
+    kast_rounds: number;
+    damage: number;
     wins: number;
     steamid: string;
     top_map_name: string;
@@ -21,10 +24,10 @@ type StatsOverviewProps = {
     name: string;
     steamProfileUrl: string;
     history: {
-      kills: number[];
-      deaths: number[];
+      kd: number[];
       headshots: number[];
-      ranks: number[];
+      kasts: number[];
+      adr: number[];
     };
   };
 };
@@ -32,8 +35,8 @@ type StatsOverviewProps = {
 const StatsOverview: FC<StatsOverviewProps> = async ({ profile }) => {
   const { $t } = await getIntl();
   const winrate = +Number((profile.wins / profile.matches) * 100).toFixed(2);
-  const kd = +Number(profile.kills / profile.deaths).toFixed(2);
-  const hs = +Number((profile.headshots / profile.kills) * 100).toFixed(2);
+  const kd = sum(profile.history.kd) / profile.history.kd.length;
+  const hs = sum(profile.history.headshots) / profile.history.headshots.length;
 
   return (
     <div className="row">
@@ -83,7 +86,13 @@ const StatsOverview: FC<StatsOverviewProps> = async ({ profile }) => {
                         "text-danger": kd < 1,
                       })}
                     >
-                      <AnimatedNumber start={0} end={kd} decimals={2} />
+                      <AnimatedNumber
+                        start={0}
+                        end={
+                          sum(profile.history.kd) / profile.history.kd.length
+                        }
+                        decimals={2}
+                      />
                     </h2>
                     <div
                       style={{
@@ -95,11 +104,8 @@ const StatsOverview: FC<StatsOverviewProps> = async ({ profile }) => {
                       }}
                     >
                       <StatsOverviewChart
-                        labels={Object.keys(profile.history.kills)}
-                        values={profile.history.kills.map(
-                          (kill, i) =>
-                            +Number(kill / profile.history.deaths[i]).toFixed(2)
-                        )}
+                        labels={Object.keys(profile.history.kd)}
+                        values={profile.history.kd}
                       />
                     </div>
                   </div>
@@ -130,33 +136,28 @@ const StatsOverview: FC<StatsOverviewProps> = async ({ profile }) => {
                     >
                       <StatsOverviewChart
                         labels={Object.keys(profile.history.headshots)}
-                        values={profile.history.headshots.map(
-                          (headshot, i) =>
-                            +Number(
-                              headshot / profile.history.kills[i]
-                            ).toFixed(2)
-                        )}
+                        values={profile.history.headshots}
                       />
                     </div>
                   </div>
                 </div>
               </div>
               <div className="col">
-                <div className="p-3 position-relative">
-                  <h5 className="text-muted text-uppercase fs-13">
-                    {$t({ id: "common.Top map" })}
-                  </h5>
-                  <h2 className="mb-0">{getMapTitle(profile.top_map_name)}</h2>
-                </div>
-              </div>
-              <div className="col">
                 <div className="p-3">
                   <h5 className="text-muted text-uppercase fs-13">
-                    {$t({ id: "common.Best Rank" })}
+                    {$t({ id: "common.Kast" })}
                   </h5>
                   <div className="d-flex gap-1">
                     <h2 className="mb-0">
-                      <AnimatedNumber start={0} end={profile.top_rank} />
+                      <AnimatedNumber
+                        start={0}
+                        end={
+                          sum(profile.history.kasts) /
+                          profile.history.kasts.length
+                        }
+                        decimals={2}
+                        suffix="%"
+                      />
                     </h2>
                     <div
                       style={{
@@ -168,8 +169,40 @@ const StatsOverview: FC<StatsOverviewProps> = async ({ profile }) => {
                       }}
                     >
                       <StatsOverviewChart
-                        labels={Object.keys(profile.history.ranks)}
-                        values={profile.history.ranks}
+                        labels={Object.keys(profile.history.kasts)}
+                        values={profile.history.kasts}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="col">
+                <div className="p-3">
+                  <h5 className="text-muted text-uppercase fs-13">
+                    {$t({ id: "common.ADR" })}
+                  </h5>
+                  <div className="d-flex gap-1">
+                    <h2 className="mb-0">
+                      <AnimatedNumber
+                        start={0}
+                        end={
+                          sum(profile.history.adr) / profile.history.adr.length
+                        }
+                        decimals={2}
+                      />
+                    </h2>
+                    <div
+                      style={{
+                        height: 80,
+                        width: 150,
+                        position: "absolute",
+                        right: -5,
+                        bottom: -5,
+                      }}
+                    >
+                      <StatsOverviewChart
+                        labels={Object.keys(profile.history.adr)}
+                        values={profile.history.adr}
                       />
                     </div>
                   </div>

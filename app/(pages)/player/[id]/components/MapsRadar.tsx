@@ -51,7 +51,7 @@ const MapsRadar: FC<MapsRadarProps> = ({ maps }) => {
                 pointStyle: false,
               },
               {
-                label: $t({ id: "common.Loss" }),
+                label: $t({ id: "common.Defeat" }),
                 data: maps.map((map) => map.matches - map.wins + 1),
                 backgroundColor: "rgba(237, 94, 94, 0.4)",
                 borderColor: "rgba(237, 94, 94, 0.8)",
@@ -59,7 +59,7 @@ const MapsRadar: FC<MapsRadarProps> = ({ maps }) => {
                 pointStyle: false,
               },
               {
-                label: $t({ id: "common.Wins" }),
+                label: $t({ id: "common.Victory" }),
                 data: maps.map((map) => map.wins + 1),
                 backgroundColor: "rgba(19, 197, 107, 0.4)",
                 borderColor: "rgba(19, 197, 107, 0.8)",

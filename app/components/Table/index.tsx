@@ -9,6 +9,7 @@ export type TypeColumn = {
     width?: number;
     loading?: boolean;
     sorting?: boolean;
+    visible?: boolean;
   };
   Header: React.ReactNode;
   Cell: (row: any) => React.ReactNode;
@@ -68,61 +69,65 @@ const Table: FC<TableProps> = ({
       >
         <thead className="table-light">
           <tr>
-            {columns.map((column) => (
-              <th
-                key={column.id}
-                className={classNames(getColumnClassNames(column), {
-                  "cursor-pointer": column.options?.sorting,
-                })}
-                style={getColumnStyle(column)}
-                onClick={() => {
-                  if (column.options?.sorting && onSort) {
-                    onSort({
-                      type:
-                        column.id === sort?.field
-                          ? sort?.type === "desc"
-                            ? "asc"
-                            : "desc"
-                          : "asc",
-                      field: column.id,
-                    });
-                  }
-                }}
-              >
-                {column.options?.sorting ? (
-                  <div className="d-inline-flex align-items-center gap-1">
-                    {column.Header}
-                    {sort?.field === column.id && (
-                      <i
-                        className={`mdi mdi-sort-${
-                          sort?.type === "asc" ? "ascending" : "descending"
-                        }`}
-                      />
-                    )}
-                  </div>
-                ) : (
-                  column.Header
-                )}
-              </th>
-            ))}
+            {columns
+              .filter((column) => column.options?.visible !== false)
+              .map((column) => (
+                <th
+                  key={column.id}
+                  className={classNames(getColumnClassNames(column), {
+                    "cursor-pointer": column.options?.sorting,
+                  })}
+                  style={getColumnStyle(column)}
+                  onClick={() => {
+                    if (column.options?.sorting && onSort) {
+                      onSort({
+                        type:
+                          column.id === sort?.field
+                            ? sort?.type === "desc"
+                              ? "asc"
+                              : "desc"
+                            : "asc",
+                        field: column.id,
+                      });
+                    }
+                  }}
+                >
+                  {column.options?.sorting ? (
+                    <div className="d-inline-flex align-items-center gap-1">
+                      {column.Header}
+                      {sort?.field === column.id && (
+                        <i
+                          className={`mdi mdi-sort-${
+                            sort?.type === "asc" ? "ascending" : "descending"
+                          }`}
+                        />
+                      )}
+                    </div>
+                  ) : (
+                    column.Header
+                  )}
+                </th>
+              ))}
           </tr>
         </thead>
         <tbody>
           {data.map((row) => (
             <tr key={row.id}>
-              {columns.map((column) => (
-                <td
-                  key={column.id}
-                  className={getColumnClassNames(column)}
-                  style={getColumnStyle(column)}
-                >
-                  {loading && column.options?.loading !== false ? (
-                    <span className="placeholder w-100" />
-                  ) : (
-                    column.Cell(row)
-                  )}
-                </td>
-              ))}
+              {columns
+                .filter((column) => column.options?.visible !== false)
+                .map((column) => (
+                  <td
+                    key={column.id}
+                    className={getColumnClassNames(column)}
+                    style={getColumnStyle(column)}
+                  >
+                    {loading && column.options?.loading !== false ? (
+                      <span className="placeholder w-100" />
+                    ) : (
+                      column.Cell(row)
+                    )}
+                  </td>
+                ))}
             </tr>
           ))}
         </tbody>

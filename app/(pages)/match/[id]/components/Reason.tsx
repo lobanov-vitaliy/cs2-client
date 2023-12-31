@@ -49,8 +49,9 @@ const CSRoundEndReason = [
 const Reason = ({ reason, winner, team, reverse }: any) => {
   return (
     <div
-      className="align-items-center d-flex justify-content-center"
+      className="align-items-center d-flex justify-content-center flex-shrink-0"
       style={{
+        width: 24,
         height: 24,
         color: getColorByTeamNumber(winner),
         opacity: team.team_number === winner ? 1 : 0,

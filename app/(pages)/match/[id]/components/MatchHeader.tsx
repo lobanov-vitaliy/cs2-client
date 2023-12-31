@@ -4,6 +4,7 @@ import Image from "next/image";
 import { FC } from "react";
 import MatchNavigation from "./MatchNavigation";
 import { format } from "date-fns";
+import { MATCH_MODE } from "@/app/consts";
 
 const MatchHeader: FC<{ match: any }> = ({ match }) => {
   return (

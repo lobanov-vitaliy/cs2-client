@@ -1,10 +1,10 @@
 import Avatar from "@/app/components/Avatar";
-import Rank from "@/app/components/Rank";
+import { MatchRank } from "@/app/components/Rank";
 import { TypeColumn } from "@/app/components/Table";
 import { TEAM_PLAYER_COLOR } from "@/app/consts";
 import Link from "next/link";
 
-export const getColumns = (team: any): TypeColumn[] => [
+export const getColumns = (team: any, $t: any): TypeColumn[] => [
   {
     id: "name",
     options: {
@@ -23,14 +23,14 @@ export const getColumns = (team: any): TypeColumn[] => [
             border: `2px solid ${TEAM_PLAYER_COLOR[row.player_color]}`,
           }}
         />
-        <Rank value={row.rank} />
+        <MatchRank value={row.rank} />
         <h5 className="fs-13 mb-0 d-none d-md-block">{row.name}</h5>
       </Link>
     ),
   },
   {
     id: "damage",
-    Header: "Total Damage",
+    Header: $t({ id: "common.Total Damage" }),
     options: {
       align: "center",
       width: 150,
@@ -40,7 +40,7 @@ export const getColumns = (team: any): TypeColumn[] => [
   },
   {
     id: "hegrenade",
-    Header: "HE Damage",
+    Header: $t({ id: "common.HE Damage" }),
     options: {
       align: "center",
       width: 150,
@@ -50,7 +50,7 @@ export const getColumns = (team: any): TypeColumn[] => [
   },
   {
     id: "inferno",
-    Header: "Molotov Damage",
+    Header: $t({ id: "common.Molotov Damage" }),
     options: {
       align: "center",
       width: 150,
@@ -60,7 +60,7 @@ export const getColumns = (team: any): TypeColumn[] => [
   },
   {
     id: "enemies_flashed",
-    Header: "Enemies Flashed",
+    Header: $t({ id: "common.Enemies Flashed" }),
     options: {
       align: "center",
       width: 150,
@@ -70,27 +70,27 @@ export const getColumns = (team: any): TypeColumn[] => [
   },
   {
     id: "shots_fired",
-    Header: "Shots Fired",
+    Header: $t({ id: "common.Shots Fired" }),
     options: {
       align: "center",
       width: 150,
       sorting: true,
     },
-    Cell: (row) => "n/a",
+    Cell: (row) => row.shots_fired || $t({ id: "common.n/a" }),
   },
   {
     id: "damage_per_shot",
-    Header: "Damage  Per Shot",
+    Header: $t({ id: "common.Damage Per Shot" }),
     options: {
       align: "center",
       width: 150,
       sorting: true,
     },
-    Cell: (row) => "n/a",
+    Cell: (row) => row.damage_per_shot.toFixed(2) || $t({ id: "common.n/a" }),
   },
   {
     id: "survived_rounds",
-    Header: "Rounds Survived",
+    Header: $t({ id: "common.Rounds Survived" }),
     options: {
       align: "center",
       width: 150,

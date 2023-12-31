@@ -1,11 +1,22 @@
 import Avatar from "@/app/components/Avatar";
-import Rank from "@/app/components/Rank";
 import { TypeColumn } from "@/app/components/Table";
-import { TEAM_PLAYER_COLOR } from "@/app/consts";
+import { MATCH_MODE, TEAM_PLAYER_COLOR } from "@/app/consts";
+import LogoIcon from "@/components/LogoIcon";
+import Popover from "@/components/Popover";
+import { MatchRank } from "@/components/Rank";
 import classNames from "classnames";
 import Link from "next/link";
 
-export const getColumns = (team: any, $t: any): TypeColumn[] => [
+export const getColumns = ($t: any, match: any): TypeColumn[] => [
+  {
+    id: "ping",
+    options: {
+      align: "center",
+      width: 40,
+    },
+    Header: <i className="mdi mdi-signal" />,
+    Cell: (row: any) => row.ping,
+  },
   {
     id: "name",
     options: {
@@ -24,11 +35,37 @@ export const getColumns = (team: any, $t: any): TypeColumn[] => [
             border: `2px solid ${TEAM_PLAYER_COLOR[row.player_color]}`,
           }}
         />
-        <Rank value={row.rank} />
+        <MatchRank value={row.rank} />
+        {match.match_making_mode === MATCH_MODE.Premier && (
+          <div
+            style={{ width: 40 }}
+            className={classNames("text-center", {
+              "text-success": row.rank_change > 0,
+              "text-danger": row.rank_change < 0,
+            })}
+          >
+            {row.rank_change !== 0 && (
+              <>
+                {row.rank_change > 0 ? `+${row.rank_change}` : row.rank_change}
+              </>
+            )}
+          </div>
+        )}
         <h5 className="fs-13 mb-0 d-none d-md-block">{row.name}</h5>
+        {row.userid && (
+          <Popover
+            placement="bottom"
+            event="hover"
+            className="popover p-2"
+            trigger={<LogoIcon size={16} />}
+          >
+            Hardscore User
+          </Popover>
+        )}
       </Link>
     ),
   },
+
   {
     id: "kills",
     options: {
@@ -95,7 +132,7 @@ export const getColumns = (team: any, $t: any): TypeColumn[] => [
       width: 90,
       sorting: true,
     },
-    Header: $t({ id: "common.HS" }) + "%",
+    Header: "%" + $t({ id: "common.HS" }),
     Cell: (row: any) => `${(row.hs || 0).toFixed(1)}%`,
   },
   {
@@ -105,7 +142,7 @@ export const getColumns = (team: any, $t: any): TypeColumn[] => [
       width: 90,
       sorting: true,
     },
-    Header: $t({ id: "common.Kast" }) + "%",
+    Header: "%" + $t({ id: "common.Kast" }).toUpperCase(),
     Cell: (row: any) => `${(row.kasts || 0).toFixed(1)}%`,
   },
   {
@@ -114,6 +151,7 @@ export const getColumns = (team: any, $t: any): TypeColumn[] => [
       align: "center",
       width: 90,
       sorting: true,
+      visible: match.match_making_mode !== MATCH_MODE.Wingman,
     },
     Header: "3K",
     Cell: (row: any) => row.rounds_with_3_kills,
@@ -124,6 +162,7 @@ export const getColumns = (team: any, $t: any): TypeColumn[] => [
       align: "center",
       width: 90,
       sorting: true,
+      visible: match.match_making_mode !== MATCH_MODE.Wingman,
     },
     Header: "4K",
     Cell: (row: any) => row.rounds_with_4_kills,
@@ -134,6 +173,7 @@ export const getColumns = (team: any, $t: any): TypeColumn[] => [
       align: "center",
       width: 90,
       sorting: true,
+      visible: match.match_making_mode !== MATCH_MODE.Wingman,
     },
     Header: "5K",
     Cell: (row: any) => row.rounds_with_5_kills,

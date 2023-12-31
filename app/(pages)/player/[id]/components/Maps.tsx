@@ -46,33 +46,31 @@ const Maps: FC<MapsProps> = async ({ maps }) => {
                 />
               </Card.Body>
 
-              <Card.Footer>
-                <div className="d-flex flex-column gap-1">
-                  <span className="text-center">
-                    <span>{$t({ id: "common.Winrate" })}: </span>
-                    <span
-                      className={classNames({
-                        "text-success": winrate > 50,
-                        "text-danger": winrate < 50,
-                      })}
-                    >{`${winrate}%`}</span>
+              <div className="d-flex flex-column gap-1 py-3">
+                <span className="text-center">
+                  <span>{$t({ id: "common.Winrate" })}: </span>
+                  <span
+                    className={classNames({
+                      "text-success": winrate > 50,
+                      "text-danger": winrate < 50,
+                    })}
+                  >{`${winrate}%`}</span>
+                </span>
+                <span className="text-center">
+                  {$t({ id: "common.Matches" })}: {map.matches}
+                </span>
+                <span className="text-center">
+                  {$t({ id: "common.K/D" })}:{" "}
+                  <span
+                    className={classNames("text-center", {
+                      "text-success": kd >= 1,
+                      "text-danger": kd < 1,
+                    })}
+                  >
+                    {kd}
                   </span>
-                  <span className="text-center">
-                    {$t({ id: "common.Matches" })}: {map.matches}
-                  </span>
-                  <span className="text-center">
-                    {$t({ id: "common.K/D" })}:{" "}
-                    <span
-                      className={classNames("text-center", {
-                        "text-success": kd >= 1,
-                        "text-danger": kd < 1,
-                      })}
-                    >
-                      {kd}
-                    </span>
-                  </span>
-                </div>
-              </Card.Footer>
+                </span>
+              </div>
             </Card>
           </div>
         );

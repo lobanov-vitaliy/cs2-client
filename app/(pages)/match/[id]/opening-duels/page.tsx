@@ -1,17 +1,6 @@
-import MatchHeader from "../components/MatchHeader";
-import Card from "@/app/components/Card";
-import intervalToDuration from "date-fns/intervalToDuration";
-import Avatar from "@/app/components/Avatar";
-import { TEAM_PLAYER_COLOR } from "@/app/consts";
-import Table from "@/app/components/Table";
 import RoundBreakdown from "./components/RoundBreakdown";
-import OpeningDuelsTable from "./components/OpeningDuelsTable";
 import OpeningDuels from "./components/OpeningDuels";
-
-async function getMatch(id: string) {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/matches/${id}`);
-  return res.json();
-}
+import getIntl from "@/components/providers/ServerIntlProvider/intl";
 
 async function getOpeningDuels(id: string) {
   const res = await fetch(
@@ -25,20 +14,14 @@ export default async function OpeningDuelsPage({
 }: {
   params: { id: string };
 }) {
-  const [match, openingDuels] = await Promise.all([
-    getMatch(id),
-    getOpeningDuels(id),
-  ]);
+  const openingDuels = await getOpeningDuels(id);
+  const { $t } = await getIntl();
 
   return (
     <>
-      <MatchHeader match={match} />
-      <OpeningDuels match={match} openingDuels={openingDuels} />
-      <h2>Round Breakdown</h2>
-      <RoundBreakdown
-        match={match}
-        roundBreakdown={openingDuels.round_breakdown}
-      />
+      <OpeningDuels openingDuels={openingDuels} />
+      <h2>{$t({ id: "common.Round Breakdown" })}</h2>
+      <RoundBreakdown roundBreakdown={openingDuels.round_breakdown} />
     </>
   );
 }

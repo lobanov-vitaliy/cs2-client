@@ -1,10 +1,11 @@
 import Avatar from "@/app/components/Avatar";
-import Rank from "@/app/components/Rank";
 import { TypeColumn } from "@/app/components/Table";
 import { TEAM_PLAYER_COLOR } from "@/app/consts";
+import { MatchRank } from "@/components/Rank";
 import Link from "next/link";
+import Weapon from "../../../components/Weapon";
 
-export const getColumns = (team: any): TypeColumn[] => [
+export const getColumns = (team: any, $t: any): TypeColumn[] => [
   {
     id: "name",
     options: {
@@ -23,14 +24,14 @@ export const getColumns = (team: any): TypeColumn[] => [
             border: `2px solid ${TEAM_PLAYER_COLOR[row.player_color]}`,
           }}
         />
-        <Rank value={row.rank} />
+        <MatchRank value={row.rank} />
         <h5 className="fs-13 mb-0 d-none d-md-block">{row.name}</h5>
       </Link>
     ),
   },
   {
     id: "attempts",
-    Header: "Attempts",
+    Header: $t({ id: "common.Attempts" }),
     options: {
       align: "center",
       width: 150,
@@ -43,7 +44,7 @@ export const getColumns = (team: any): TypeColumn[] => [
   },
   {
     id: "success",
-    Header: "Success",
+    Header: $t({ id: "common.Success" }),
     options: {
       align: "center",
       width: 150,
@@ -56,42 +57,53 @@ export const getColumns = (team: any): TypeColumn[] => [
   },
   {
     id: "traded",
-    Header: "Traded",
+    Header: $t({ id: "common.Traded" }),
     options: {
       align: "center",
       width: 150,
       sorting: true,
     },
-    Cell: (row) => "n/a",
+    Cell: (row) => $t({ id: "common.n/a" }),
   },
   {
     id: "most_killed_player",
-    Header: "Most Killed Player",
+    Header: $t({ id: "common.Most Killed Player" }),
     options: {
       align: "center",
       width: 150,
       sorting: true,
     },
-    Cell: (row: any) => row.most_killed_player?.name || "n/a",
+    Cell: (row: any) =>
+      row.most_killed_player?.name || $t({ id: "common.n/a" }),
   },
   {
     id: "best_weapon",
-    Header: "Best Weapon",
+    Header: $t({ id: "common.Best Weapon" }),
     options: {
       align: "center",
       width: 150,
       sorting: true,
     },
-    Cell: (row) => row.best_weapon || "n/a",
+    Cell: (row) =>
+      row.best_weapon ? (
+        <Weapon name={row.best_weapon} />
+      ) : (
+        $t({ id: "common.n/a" })
+      ),
   },
   {
     id: "most_died_to",
-    Header: "Most Died To",
+    Header: $t({ id: "common.Most Died To" }),
     options: {
       align: "center",
       width: 150,
       sorting: true,
     },
-    Cell: (row) => row.most_died_to || "n/a",
+    Cell: (row) =>
+      row.most_died_to ? (
+        <Weapon name={row.most_died_to} />
+      ) : (
+        $t({ id: "common.n/a" })
+      ),
   },
 ];

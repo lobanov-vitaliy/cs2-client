@@ -1,6 +1,10 @@
+"use client";
+
 import { FC } from "react";
 import classes from "./Rank.module.scss";
 import classNames from "classnames";
+import { useMatch } from "@/app/(pages)/match/[id]/context";
+import { MATCH_MODE } from "@/app/consts";
 
 const levels = [
   [0, 4999],
@@ -12,7 +16,7 @@ const levels = [
   [30000, 35000],
 ];
 
-const Rank: FC<{ value: number }> = ({ value }) => {
+export const PremierRank: FC<{ value: number }> = ({ value }) => {
   const level = levels.findIndex(([min, max]) => value >= min && value <= max);
   const [a, b, c] = String(value).match(/^([0-9]+)([0-9]{3})$/) || [];
   return (
@@ -43,4 +47,42 @@ const Rank: FC<{ value: number }> = ({ value }) => {
   );
 };
 
-export default Rank;
+export const WingmanRank: FC<{ value: number }> = ({ value }) => {
+  return (
+    <img
+      className={classes.rank}
+      alt="rank"
+      src={`/assets/ranks/matchmaking_wingman${value || 0}.png`}
+    />
+  );
+};
+
+export const CompetitiveRank: FC<{ value: number }> = ({ value }) => {
+  return (
+    <img
+      className={classes.rank}
+      alt="rank"
+      src={`/assets/ranks/matchmaking${value || 0}.png`}
+    />
+  );
+};
+
+export const RankByMatchMode: FC<{ value: number; mode?: number }> = ({
+  value,
+  mode = MATCH_MODE.Competitive,
+}) => {
+  if (mode === MATCH_MODE.Wingman) {
+    return <WingmanRank value={value} />;
+  }
+
+  if (mode === MATCH_MODE.Premier) {
+    return <PremierRank value={value} />;
+  }
+
+  return <CompetitiveRank value={value} />;
+};
+
+export const MatchRank: FC<{ value: number }> = ({ value }) => {
+  const { match_making_mode } = useMatch();
+  return <RankByMatchMode value={value} mode={match_making_mode} />;
+};

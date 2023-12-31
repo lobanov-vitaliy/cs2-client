@@ -1,8 +1,11 @@
 import { Fragment, FC } from "react";
 import { getColorByTeamNumber } from "@/app/utils/team";
-import Reason from "./Reason";
+import Reason from "../Reason";
+import Popover from "@/components/Popover";
+import RoundInfo from "@/components/RoundInfo";
 
 type RoundsProps = {
+  match: any;
   rounds: Array<{
     round_number: number;
     winner_team_number: number;
@@ -16,7 +19,7 @@ type RoundsProps = {
   }>;
 };
 
-const Rounds: FC<RoundsProps> = ({ rounds }) => {
+const Rounds: FC<RoundsProps> = ({ rounds, match }) => {
   return (
     <div className="d-none d-lg-flex justify-content-center gap-2 py-3">
       {rounds.map((round, i: number) => {
@@ -28,7 +31,7 @@ const Rounds: FC<RoundsProps> = ({ rounds }) => {
           <Fragment key={round.round_number}>
             <div className="d-flex justify-content-center flex-column gap-1">
               <div className="d-flex flex-column flex-column-reverse gap-1">
-                {[...new Array(5)].map((_, i) => (
+                {[...new Array(round.teams[0].count)].map((_, i) => (
                   <div
                     key={i}
                     style={{
@@ -51,14 +54,21 @@ const Rounds: FC<RoundsProps> = ({ rounds }) => {
                 style={{
                   width: 24,
                   height: 24,
-                  paddingTop: 1,
                   border: `1px solid ${getColorByTeamNumber(
                     round.winner_team_number
                   )}`,
                 }}
-                className="d-flex rounded-1 justify-content-center align-items-center bg-opacity-25"
+                className="d-flex fs-5 justify-content-center align-items-center bg-opacity-25"
               >
-                {round.round_number}
+                <Popover
+                  placement="bottom"
+                  className="popover mw-100 p-3"
+                  trigger={
+                    <div className="cursor-pointer">{round.round_number}</div>
+                  }
+                >
+                  <RoundInfo round={round.round_number} match={match} />
+                </Popover>
               </div>
               <Reason
                 reason={round.reason}
@@ -66,7 +76,7 @@ const Rounds: FC<RoundsProps> = ({ rounds }) => {
                 team={round.teams[1]}
               />
               <div className="d-flex flex-column gap-1">
-                {[...new Array(5)].map((_, i) => (
+                {[...new Array(round.teams[1].count)].map((_, i) => (
                   <div
                     key={i}
                     style={{

@@ -2,9 +2,10 @@ import { FC, useMemo, useState } from "react";
 import Card from "@/app/components/Card";
 import Table from "@/app/components/Table";
 import { getColumns } from "./columns";
-import Rank from "@/app/components/Rank";
 import classNames from "classnames";
 import { useIntl } from "react-intl";
+import { MatchRank } from "@/components/Rank";
+import { useMatch } from "../../context";
 
 type TeamTableProps = {
   loading?: boolean;
@@ -13,6 +14,7 @@ type TeamTableProps = {
     result: string;
     name: string;
     score: number;
+    surrender: boolean;
     players: Array<{
       steamid: string;
       avatar: string;
@@ -57,13 +59,16 @@ const TeamTable: FC<TeamTableProps> = ({
   loading = false,
 }) => {
   const { $t } = useIntl();
-  const columns = useMemo(() => getColumns(team, $t), [team, $t]);
+  const match = useMatch();
+  const columns = useMemo(() => getColumns($t, match), [$t, match]);
   return (
     <Card className="mb-lg-0 mb-2">
-      <div className="align-items-center d-flex">
+      <div className="d-flex">
         <div className="w-lg d-none d-lg-block">
-          <div className="mb-0 h-100">
+          <div className="mb-0 h-100 d-flex align-items-center justify-content-center">
             <div className="d-flex gap-1 flex-column align-items-center justify-content-center">
+              {team.surrender && <div className="text-danger">SURRENDERED</div>}
+
               {team.result === "win" ? (
                 <div className="mdi mdi-trophy fs-1 d-flex justify-content-center align-items-center" />
               ) : (
@@ -71,13 +76,13 @@ const TeamTable: FC<TeamTableProps> = ({
               )}
 
               <div className="fs-5">{team.name}</div>
-              <Rank
+              <MatchRank
                 value={
                   +Number(
                     team.players.reduce(
                       (sum: number, player: any) => sum + player.rank,
                       0
-                    ) / 5
+                    ) / team.players.length
                   ).toFixed(0)
                 }
               />

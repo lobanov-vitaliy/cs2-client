@@ -34,6 +34,10 @@ const tabs = [
     ),
     path: "",
   },
+  // {
+  //   title: ($t: any, match: any) => $t({ id: "common.Rounds" }),
+  //   path: "/rounds",
+  // },
   {
     title: ($t: any, match: any) => $t({ id: "common.Timeline" }),
     path: "/timeline",
@@ -42,13 +46,21 @@ const tabs = [
     title: ($t: any, match: any) => $t({ id: "common.Clutches" }),
     path: "/clutches",
   },
-  {
-    title: ($t: any, match: any) => $t({ id: "common.Utility" }),
-    path: "/utility",
-  },
+  // {
+  //   title: ($t: any, match: any) => $t({ id: "common.Utility" }),
+  //   path: "/utility",
+  // },
   {
     title: ($t: any, match: any) => $t({ id: "common.Activity" }),
     path: "/activity",
+  },
+  {
+    title: ($t: any, match: any) => $t({ id: "common.Economy" }),
+    path: "/economy",
+  },
+  {
+    title: ($t: any, match: any) => $t({ id: "common.C4" }),
+    path: "/explosives",
   },
   {
     title: ($t: any, match: any) => $t({ id: "common.Opening Duels" }),
@@ -58,7 +70,8 @@ const tabs = [
 
 const MatchNavigation: FC<{ match: any }> = ({ match }) => {
   const pathname = usePathname();
-  const { $t } = useIntl();
+  const { $t, locale } = useIntl();
+
   return (
     <ul className="border-bottom-0 nav nav-custom-light nav-light nav-tabs-custom">
       {tabs.map(({ path, title }) => {
@@ -67,7 +80,7 @@ const MatchNavigation: FC<{ match: any }> = ({ match }) => {
           <li className="nav-item" key={path}>
             <Link
               className={classNames("nav-link", {
-                active: url === pathname,
+                active: url === pathname.replace(`/${locale}/`, "/"),
               })}
               href={url}
             >

@@ -5,8 +5,12 @@ import Table from "@/app/components/Table";
 import { FC, useEffect, useMemo, useState } from "react";
 import { getColumns } from "./columns";
 import SideSwicher from "@/app/components/SideSwicher";
+import { useMatch } from "../../context";
+import { useIntl } from "react-intl";
 
-const Activity: FC<{ match: any }> = ({ match }) => {
+const Activity: FC = () => {
+  const { $t } = useIntl();
+  const match = useMatch();
   const [side, setSide] = useState(0);
   const [data, setData] = useState<any[] | null>(null);
   const [sort, setSort] = useState<any>();
@@ -61,7 +65,7 @@ const Activity: FC<{ match: any }> = ({ match }) => {
             sort={sort}
             onSort={setSort}
             loading={data === null}
-            columns={getColumns(team)}
+            columns={getColumns(team, $t)}
             data={team.players}
           />
         </Card>

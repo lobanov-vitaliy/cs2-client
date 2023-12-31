@@ -6,8 +6,10 @@ import SideSwicher from "@/app/components/SideSwicher";
 import { TEAM_PLAYER_COLOR } from "@/app/consts";
 import classNames from "classnames";
 import { FC, useState } from "react";
+import { useMatch } from "../context";
 
-const Сlutches: FC<{ match: any; clutches: any[] }> = ({ match, clutches }) => {
+const Сlutches: FC<{ clutches: any[] }> = ({ clutches }) => {
+  const match = useMatch();
   const [side, setSide] = useState(0);
 
   return (
@@ -18,9 +20,9 @@ const Сlutches: FC<{ match: any; clutches: any[] }> = ({ match, clutches }) => 
         <div className="row">
           {match.teams.map((team: any, i: number) => (
             <div key={team.id} className="col-12 col-lg-6">
-              <Card>
-                <Card.Header>
-                  <div className="row row-cols-5">
+              <Card className="card-height-100">
+                <Card.Header className="p-2 pb-0">
+                  <div className={`row row-cols-${team.players.length}`}>
                     {team.players.map((player: any) => (
                       <div
                         key={player.steamid}
@@ -40,8 +42,8 @@ const Сlutches: FC<{ match: any; clutches: any[] }> = ({ match, clutches }) => 
                     ))}
                   </div>
                 </Card.Header>
-                <Card.Body>
-                  <div className="row row-cols-5">
+                <Card.Body className="p-2">
+                  <div className={`row h-100 row-cols-${team.players.length}`}>
                     {team.players.map((player: any) => {
                       const playerClutches = clutches?.filter(
                         (clutch) =>
@@ -52,7 +54,9 @@ const Сlutches: FC<{ match: any; clutches: any[] }> = ({ match, clutches }) => 
                       return (
                         <div
                           key={player.steamid}
-                          className="col d-flex flex-column gap-3 align-items-center text-center"
+                          className={classNames(
+                            "col d-flex flex-column flex-grow-1 gap-2 align-items-center text-center"
+                          )}
                         >
                           {playerClutches?.map((clutch) => {
                             let result;
@@ -81,7 +85,7 @@ const Сlutches: FC<{ match: any; clutches: any[] }> = ({ match, clutches }) => 
                                 <div>
                                   <div
                                     className={classNames(
-                                      "border-bottom border-success text-center fs-3",
+                                      "border-bottom border-success text-center fs-5",
                                       {
                                         "border-success": result === "won",
                                         "border-danger": result === "lost",
@@ -92,8 +96,8 @@ const Сlutches: FC<{ match: any; clutches: any[] }> = ({ match, clutches }) => 
                                     1v{clutch.length}
                                   </div>
                                 </div>
-                                <div className="p-1 d-flex flex-column align-items-center">
-                                  <div className="p-1 d-flex gap-1 align-items-center">
+                                <div className="p-0 d-flex flex-column align-items-center">
+                                  <div className="p-0 d-flex gap-1 align-items-center">
                                     <svg
                                       width={16}
                                       height={16}

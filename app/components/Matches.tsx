@@ -2,14 +2,17 @@
 
 import Avatar from "@/app/components/Avatar";
 import Card from "@/app/components/Card";
-import { TEAM_PLAYER_COLOR } from "@/app/consts";
+import { MATCH_MODE, TEAM_PLAYER_COLOR } from "@/app/consts";
 import { getMapTitle } from "@/app/utils/match";
 import classNames from "classnames";
 import { format } from "date-fns";
 import Image from "next/image";
 import Link from "next/link";
+import { useIntl } from "react-intl";
 
 const Matches = ({ matches }: any) => {
+  const { $t } = useIntl();
+
   return (
     <div className="row">
       {matches.map((match: any) => {
@@ -24,7 +27,6 @@ const Matches = ({ matches }: any) => {
                 <span>
                   {format(new Date(match.datetime), "yyyy-MM-dd HH:mm")}
                 </span>
-                <span>Matchmaking</span>
               </Card.Header>
               <Card.Body
                 style={{

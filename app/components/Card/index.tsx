@@ -35,14 +35,15 @@ const Card: FC<CardProps> & {
   Header: typeof Header;
   Body: typeof Body;
   Footer: typeof Footer;
-} = ({ children, className, animate = false, ...props }) => {
+} = ({ children, className, animate = false, bordered = true, ...props }) => {
   return (
     <div
       {...props}
       className={cn(
-        "card border-dashed border-dark border-2",
+        "card ",
         {
           "card-animate": animate,
+          "border-dashed border-dark border-2": bordered,
         },
         className
       )}
