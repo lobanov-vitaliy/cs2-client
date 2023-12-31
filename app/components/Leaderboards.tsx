@@ -2,7 +2,6 @@
 
 import Avatar from "@/app/components/Avatar";
 import Card from "@/app/components/Card";
-import Rank from "@/app/components/Rank";
 import Table from "@/app/components/Table";
 import classNames from "classnames";
 import Link from "next/link";
