@@ -12,6 +12,7 @@ import MapsRadar from "./components/MapsRadar";
 import getIntl from "@/components/providers/ServerIntlProvider/intl";
 import { notFound } from "next/navigation";
 import Weapons from "./components/Weapons";
+import Ranks from "./components/Ranks";
 
 export const dynamic = "force-dynamic";
 
@@ -25,7 +26,7 @@ async function getProfile(id: string) {
 
 async function getMatches(id: string) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/player/${id}/matches?limit=20`
+    `${process.env.NEXT_PUBLIC_API_URL}/player/${id}/matches?limit=3`
   );
   return res.json();
 }
@@ -57,6 +58,12 @@ async function getWeapons(id: string) {
   );
   return res.json();
 }
+async function getRanks(id: string) {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/player/${id}/ranks`
+  );
+  return res.json();
+}
 
 export default async function PlayerProfilePage({
   params: { id },
@@ -64,13 +71,15 @@ export default async function PlayerProfilePage({
   params: { id: string };
 }) {
   const profile = await getProfile(id);
-  const [matches, teammates, maps, clutches, weapons] = await Promise.all([
-    getMatches(id),
-    getTeammates(id),
-    getMaps(id),
-    getClutches(id),
-    getWeapons(id),
-  ]);
+  const [matches, teammates, maps, clutches, weapons, ranks] =
+    await Promise.all([
+      getMatches(id),
+      getTeammates(id),
+      getMaps(id),
+      getClutches(id),
+      getWeapons(id),
+      getRanks(id),
+    ]);
   const { $t } = await getIntl();
 
   return (
@@ -80,6 +89,7 @@ export default async function PlayerProfilePage({
         <div className="col-auto">
           <div className="avatar-lg">
             <img
+              alt="avatar"
               src={profile.avatar}
               className="img-thumbnail rounded-circle"
             />
@@ -102,7 +112,7 @@ export default async function PlayerProfilePage({
       <StatsOverview profile={profile} />
 
       <h2 className="text-uppercase">{$t({ id: "common.Recent Matches" })}</h2>
-      <RecentMatches matches={matches.data.slice(0, 3)} />
+      <RecentMatches matches={matches.data} />
 
       <div className="row">
         <div className="col-12 col-lg-4">
@@ -172,6 +182,9 @@ export default async function PlayerProfilePage({
       <h2 className="text-uppercase">{$t({ id: "common.Weapon" })}</h2>
       <Weapons weapons={weapons} />
 
+      <h2 className="text-uppercase">{$t({ id: "common.Ranks" })}</h2>
+      <Ranks ranks={ranks} />
+
       <div className="row">
         <div className="col-12 col-xl-3">
           <h2 className="text-uppercase">{$t({ id: "common.Maps Radar" })}</h2>
@@ -183,12 +196,7 @@ export default async function PlayerProfilePage({
         </div>
       </div>
 
-      <MathesHistory
-        id={id}
-        matches={matches.data}
-        maps={maps}
-        teammates={teammates}
-      />
+      <MathesHistory id={id} maps={maps} />
     </div>
   );
 }

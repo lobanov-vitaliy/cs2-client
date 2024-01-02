@@ -50,7 +50,7 @@ export default async function HomePage() {
               <h1 className="fs-48">{$t({ id: "main-page.Title" })}</h1>
               <p className="fs-4">{$t({ id: "main-page.Description" })}</p>
               {!session && (
-                <div className="mt-5">
+                <div className="my-4">
                   <a href={`${process.env.NEXT_PUBLIC_API_URL}/auth/steam`}>
                     <Button
                       size="lg"

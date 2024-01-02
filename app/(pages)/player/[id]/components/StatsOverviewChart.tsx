@@ -48,6 +48,9 @@ const StatsOverviewChart: FC<{ labels: string[]; values: number[] }> = ({
           title: {
             display: false,
           },
+          tooltip: {
+            enabled: false,
+          },
         },
         scales: {
           x: {

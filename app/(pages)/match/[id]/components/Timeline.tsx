@@ -201,7 +201,6 @@ const Timeline: FC = () => {
                       title: {
                         display: false,
                       },
-
                       tooltip: {
                         enabled: false,
                       },

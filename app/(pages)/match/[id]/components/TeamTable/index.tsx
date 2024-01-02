@@ -67,7 +67,11 @@ const TeamTable: FC<TeamTableProps> = ({
         <div className="w-lg d-none d-lg-block">
           <div className="mb-0 h-100 d-flex align-items-center justify-content-center">
             <div className="d-flex gap-1 flex-column align-items-center justify-content-center">
-              {team.surrender && <div className="text-danger">SURRENDERED</div>}
+              {team.surrender && (
+                <div className="text-danger text-uppercase">
+                  {$t({ id: "common.Surrendered" })}
+                </div>
+              )}
 
               {team.result === "win" ? (
                 <div className="mdi mdi-trophy fs-1 d-flex justify-content-center align-items-center" />

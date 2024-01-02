@@ -9,15 +9,19 @@ type OptionType = {
   color?: string;
 };
 
-const Dropdown: FC<{ options: OptionType[]; placeholder?: string }> = ({
-  options,
-  placeholder,
-}) => {
+const Dropdown: FC<{
+  options: OptionType[];
+  placeholder?: string;
+  value?: any;
+  onChange?: (value: any) => void;
+}> = ({ options, placeholder, onChange, value }) => {
   return (
     <Select
       isMulti
       isSearchable={false}
       placeholder={placeholder}
+      onChange={onChange}
+      value={value}
       styles={{
         multiValue: (base) => ({
           ...base,
