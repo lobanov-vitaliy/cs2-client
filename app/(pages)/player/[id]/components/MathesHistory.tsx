@@ -72,7 +72,8 @@ const MathesHistory: FC<MathesHistoryProps> = ({ id, maps }) => {
         <h2 className="text-uppercase mb-0">{$t({ id: "common.Matches" })}</h2>
         <div className="align-content-center d-flex gap-1">
           <Dropdown
-            placeholder="All maps"
+            isMulti
+            placeholder={$t({ id: "common.All maps" })}
             value={mapSelected}
             onChange={setMapSelected}
             options={maps.map((map: any) => ({

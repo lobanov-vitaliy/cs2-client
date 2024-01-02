@@ -124,7 +124,7 @@ export default async function PlayerProfilePage({
                   "align-items-center d-flex justify-content-center text-center":
                     teammates.length === 0,
                 })}
-                style={{ height: 205, overflow: "auto" }}
+                style={{ height: 208, overflow: "auto" }}
               >
                 {teammates.length === 0 && (
                   <div>
@@ -134,7 +134,7 @@ export default async function PlayerProfilePage({
                 )}
                 {teammates.map((teammate: any) => (
                   <Link
-                    style={{ padding: "7px 10px" }}
+                    style={{ padding: "8px 10px" }}
                     className="list-group-item list-group-item-action"
                     key={teammate.steamid}
                     href={`/player/${teammate.steamid}`}

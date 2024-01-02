@@ -1,8 +1,7 @@
 import Metadata from "@/components/Metadata";
-import Card from "@/components/Card";
-import Button from "@/components/Button";
 import { getSession } from "@/app/actions/session";
 import { redirect } from "next/navigation";
+import ConnectSettings from "./components/ConnectSettings";
 
 export default async function AccountPage() {
   const session = await getSession();
@@ -36,37 +35,7 @@ export default async function AccountPage() {
           </div>
         </div>
       </div>
-      <Card>
-        <Card.Body>
-          <div className="fs-4 pb-4">Automatic Match Tracking</div>
-          <p className="fs-5">
-            {`Authentication Code Log in with your Steam account on this page. Scroll down to "Access to Your Match History" and copy the "Authentication Code". If it's not there yet, click "Create Authentication Code" to generate one.`}
-          </p>
-          <div className="mb-3">
-            <label htmlFor="1" className="form-label">
-              Authentication Code
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="1"
-              placeholder="AAAA-AAAAA-AAAA"
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="2" className="form-label">
-              Your most recently completed match token
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="2"
-              placeholder="CSGO-xxxxx-xxxxx-xxxxx-xxxxx-xxxxx"
-            />
-          </div>
-          <Button>Connect Matchmaking</Button>
-        </Card.Body>
-      </Card>
+      <ConnectSettings />
     </div>
   );
 }

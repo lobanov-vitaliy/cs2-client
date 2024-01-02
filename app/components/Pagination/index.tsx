@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import cn from "classnames";
 import classNames from "classnames";
+import { useIntl } from "react-intl";
 
 export type Props = {
   total?: number;
@@ -17,6 +18,7 @@ const Pagination: React.FC<Props> = ({
   onChange,
   className,
 }) => {
+  const { $t } = useIntl();
   const count = Math.ceil(total / pageCount);
   const navigation = useMemo(() => {
     let left: Array<number> = [];
@@ -64,7 +66,7 @@ const Pagination: React.FC<Props> = ({
             "cursor-pointer": page !== 1,
           })}
         >
-          <span className="page-link">Previous</span>
+          <span className="page-link">{$t({ id: "common.Previous" })}</span>
         </li>
 
         {navigation.map((value, index) => {
@@ -105,7 +107,7 @@ const Pagination: React.FC<Props> = ({
             "cursor-pointer": page !== count,
           })}
         >
-          <span className="page-link">Next</span>
+          <span className="page-link">{$t({ id: "common.Next" })}</span>
         </li>
       </ul>
     </>

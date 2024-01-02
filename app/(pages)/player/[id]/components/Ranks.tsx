@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useMemo, useState } from "react";
+import { FC, useState } from "react";
 import Card from "@/app/components/Card";
 import {
   Chart as ChartJS,
@@ -45,8 +45,8 @@ const Ranks: FC<RanksProps> = ({ ranks }) => {
     Number(Object.keys(ranks).shift()) || MATCH_MODE.Competitive
   );
 
-  const min = Math.min(...Object.values(ranks[type]));
-  const max = Math.max(...Object.values(ranks[type]));
+  const min = Math.min(...Object.values(ranks[type] || {}));
+  const max = Math.max(...Object.values(ranks[type] || {}));
   const isPremier = Number(MATCH_MODE.Premier) === Number(type);
 
   return (
@@ -64,7 +64,7 @@ const Ranks: FC<RanksProps> = ({ ranks }) => {
                 "cursor-pointer": Number(key) !== type,
               })}
             >
-              {items[key]}
+              {$t({ id: `common.${items[key]}` })}
             </span>
           </li>
         ))}
@@ -79,7 +79,6 @@ const Ranks: FC<RanksProps> = ({ ranks }) => {
                 intersect: false,
                 mode: "index",
               },
-
               plugins: {
                 legend: {
                   display: false,
@@ -124,16 +123,16 @@ const Ranks: FC<RanksProps> = ({ ranks }) => {
               },
             }}
             data={{
-              labels: Object.keys(ranks[type]).map((value) =>
+              labels: Object.keys(ranks[type] || {}).map((value) =>
                 format(new Date(value), "yyyy-MM-dd HH:ii")
               ),
               datasets: [
                 {
                   label: "rank",
-                  data: Object.values(ranks[type]),
+                  data: Object.values(ranks[type] || {}),
                   borderWidth: 1.5,
                   pointStyle: false,
-                  fill: true,
+                  fill: false,
                 },
               ],
             }}

@@ -10,14 +10,15 @@ type OptionType = {
 };
 
 const Dropdown: FC<{
+  isMulti?: boolean;
   options: OptionType[];
   placeholder?: string;
   value?: any;
   onChange?: (value: any) => void;
-}> = ({ options, placeholder, onChange, value }) => {
+}> = ({ options, placeholder, onChange, value, isMulti = false }) => {
   return (
     <Select
-      isMulti
+      isMulti={isMulti}
       isSearchable={false}
       placeholder={placeholder}
       onChange={onChange}

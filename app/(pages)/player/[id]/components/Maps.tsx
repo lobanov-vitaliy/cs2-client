@@ -3,6 +3,7 @@ import Card from "@/app/components/Card";
 import classNames from "classnames";
 import Image from "next/image";
 import getIntl from "@/components/providers/ServerIntlProvider/intl";
+import { CompetitiveRank } from "@/components/Rank";
 
 type MapsProps = {
   maps: Array<{
@@ -13,6 +14,7 @@ type MapsProps = {
     deaths: number;
     headshots: number;
     wins: number;
+    rank: number;
   }>;
 };
 
@@ -44,6 +46,7 @@ const Maps: FC<MapsProps> = async ({ maps }) => {
                   src={`/assets/maps/map_icon_${map.map_name}.svg`}
                   alt={map.map_name}
                 />
+                <CompetitiveRank value={map.rank} />
               </Card.Body>
 
               <div className="d-flex flex-column gap-1 py-3">
