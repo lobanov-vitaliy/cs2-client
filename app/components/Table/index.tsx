@@ -24,6 +24,7 @@ type TableProps = {
   loading?: boolean;
   bordered?: boolean;
   striped?: boolean;
+  size?: "sm" | "md";
   sort?: TypeSort;
   onSort?: (sort: TypeSort) => void;
   columns: Array<TypeColumn>;
@@ -51,6 +52,7 @@ const Table: FC<TableProps> = ({
   columns,
   data,
   sort,
+  size = "sm",
   loading = false,
   bordered = false,
   striped = true,
@@ -60,10 +62,11 @@ const Table: FC<TableProps> = ({
     <div className="table-responsive">
       <table
         className={classNames(
-          "table table-nowrap table-sm align-middle caption-top table-borderless mb-0",
+          "table table-nowrap  align-middle caption-top table-borderless mb-0",
           {
             "table-bordered": bordered,
             "table-striped": striped,
+            "table-sm": size === "sm",
           }
         )}
       >

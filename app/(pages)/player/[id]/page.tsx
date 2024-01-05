@@ -132,43 +132,55 @@ export default async function PlayerProfilePage({
                     30 matches.`}
                   </div>
                 )}
-                {teammates.map((teammate: any) => (
-                  <Link
-                    style={{ padding: "8px 10px" }}
-                    className="list-group-item list-group-item-action"
-                    key={teammate.steamid}
-                    href={`/player/${teammate.steamid}`}
-                  >
-                    <div className="d-flex align-items-center">
-                      <div className="flex-grow-1">
-                        <div className="d-flex align-items-center">
-                          <Avatar src={teammate.avatar} size="xs" />
-                          <div className="flex-shrink-0 ms-2">
-                            <h6 className="fs-14 mb-0">{teammate.name}</h6>
-                            <small className="text-muted">
-                              {$t({ id: "common.Matches" })}: {teammate.matches}
-                            </small>
+                {teammates.map((teammate: any) => {
+                  const winrate = (teammate.wins / teammate.matches) * 100;
+                  return (
+                    <Link
+                      style={{ padding: "8px 10px" }}
+                      className="list-group-item list-group-item-action"
+                      key={teammate.steamid}
+                      href={`/player/${teammate.steamid}`}
+                    >
+                      <div className="d-flex align-items-center">
+                        <div className="flex-grow-1">
+                          <div className="d-flex align-items-center">
+                            <Avatar src={teammate.avatar} size="xs" />
+                            <div className="flex-shrink-0 ms-2">
+                              <h6 className="fs-14 mb-0">{teammate.name}</h6>
+                              <small className="text-muted">
+                                {$t({ id: "common.Matches" })}:{" "}
+                                {teammate.matches}
+                              </small>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="flex-shrink-0 w-25">
+                          <div
+                            className={classNames("text-center", {
+                              "text-success": winrate > 50,
+                              "text-danger": winrate < 50,
+                            })}
+                          >
+                            {Number(winrate).toFixed(2)}%
+                          </div>
+                          <div
+                            className={classNames("progress progress-sm mt-1", {
+                              "progress-success": winrate > 50,
+                              "progress-danger": winrate < 50,
+                            })}
+                          >
+                            <div
+                              className="progress-bar"
+                              style={{
+                                width: winrate + "%",
+                              }}
+                            />
                           </div>
                         </div>
                       </div>
-                      <div className="flex-shrink-0">
-                        <div
-                          className={classNames("text-center", {
-                            "text-success":
-                              (teammate.wins / teammate.matches) * 100 > 50,
-                            "text-danger":
-                              (teammate.wins / teammate.matches) * 100 < 50,
-                          })}
-                        >
-                          {Number(
-                            (teammate.wins / teammate.matches) * 100
-                          ).toFixed(2)}
-                          %
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
-                ))}
+                    </Link>
+                  );
+                })}
               </div>
             </div>
           </Card>
@@ -182,8 +194,8 @@ export default async function PlayerProfilePage({
       <h2 className="text-uppercase">{$t({ id: "common.Weapon" })}</h2>
       <Weapons weapons={weapons} />
 
-      <h2 className="text-uppercase">{$t({ id: "common.Ranks" })}</h2>
-      <Ranks ranks={ranks} />
+      <h2 className="text-uppercase">{$t({ id: "common.Rank" })}</h2>
+      <Ranks data={ranks} />
 
       <div className="row">
         <div className="col-12 col-xl-3">

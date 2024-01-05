@@ -82,34 +82,39 @@ const Scoreboard: FC<ScoreboardProps> = ({
 
   return (
     <div className="mb-4">
-      <div className="d-flex align-items-center gap-3">
+      <div className="row my-2">
         {(leaders || []).map((leader: any, index: number) => {
-          console.log("leader", leader);
           const player = match.players.find(
             (player: any) => player.steamid === leader.steamid
           );
           return (
-            <Card
-              bordered={false}
-              key={player.steamid}
-              className="flex-grow-1 my-3"
-              style={{
-                border: `1px solid ${["#d4af37", "#c0c0c0", "#cd7f32"][index]}`,
-              }}
-            >
-              <div className="d-flex align-items-center justify-content-between gap-1  p-2">
-                <div className="d-flex align-items-center gap-2">
-                  <Avatar size="xs" src={player.avatar} />
-                  <div className="fs-5">{player.name}</div>
-                </div>
-                <div className="d-flex align-items-center gap-3 text-muted">
-                  <div>
-                    {[leader.kills, leader.deaths, leader.assists].join(" / ")}
+            <div key={player.steamid} className="col-12 col-lg-4 my-1">
+              <Card
+                bordered={false}
+                className="flex-grow-1 m-0"
+                style={{
+                  border: `1px solid ${
+                    ["#d4af37", "#c0c0c0", "#cd7f32"][index]
+                  }`,
+                }}
+              >
+                <div className="d-flex align-items-center justify-content-between gap-1  p-2">
+                  <div className="d-flex align-items-center gap-2">
+                    <div className="fs-4">#{index + 1}</div>
+                    <Avatar size="xs" src={player.avatar} />
+                    <div className="fs-5">{player.name}</div>
                   </div>
-                  <div>{leader.hltv_rating.toFixed(2)}</div>
+                  <div className="d-flex align-items-center gap-3 text-muted">
+                    <div>
+                      {[leader.kills, leader.deaths, leader.assists].join(
+                        " / "
+                      )}
+                    </div>
+                    <div>{leader.hltv_rating.toFixed(2)}</div>
+                  </div>
                 </div>
-              </div>
-            </Card>
+              </Card>
+            </div>
           );
         })}
       </div>

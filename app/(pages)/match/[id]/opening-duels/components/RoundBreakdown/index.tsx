@@ -46,6 +46,10 @@ const RoundBreakdown: FC<{ roundBreakdown: any[] }> = ({ roundBreakdown }) => {
                 (player: any) => player.steamid === round.user.steamid
               );
 
+              if (!attaker || !user) {
+                return null;
+              }
+
               return (
                 <tr key={round.round_number}>
                   <td className="text-center">{round.round_number}</td>
