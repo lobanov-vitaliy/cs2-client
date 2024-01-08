@@ -5,9 +5,16 @@ import Card from "@/app/components/Card";
 import Weapon from "@/app/(pages)/match/[id]/components/Weapon";
 import Table from "@/components/Table";
 import { useIntl } from "react-intl";
+import Accuracy from "./Accuracy";
 
 type WeaponsProps = {
   weapons: {
+    accuracy: {
+      chest: number;
+      stomac: number;
+      leg: number;
+      head: number;
+    };
     topByGroup: Array<{
       kills: number;
       headshot: number;
@@ -30,14 +37,24 @@ type WeaponsProps = {
 const Weapons: FC<WeaponsProps> = ({ weapons }) => {
   const { $t } = useIntl();
   const maxKills = Math.max(...weapons.topByKills.map((data) => data.kills));
+
   return (
     <div className="row">
-      <div className="col-12 col-lg-4">
+      <div className="col-12 col-lg-3">
+        <Card className="card-height-100">
+          <Card.Header className="p-2">
+            {$t({ id: "common.Accuracy" })}
+          </Card.Header>
+          <Accuracy data={weapons.accuracy} />
+        </Card>
+      </div>
+      <div className="col-12 col-lg-3">
         <Card className="card-height-100">
           <Card.Header className="p-2">
             {$t({ id: "common.By Types" })}
           </Card.Header>
           <Table
+            size="md"
             data={weapons.topByGroup}
             columns={[
               {
@@ -76,20 +93,20 @@ const Weapons: FC<WeaponsProps> = ({ weapons }) => {
           />
         </Card>
       </div>
-      <div className="col-12 col-lg-4">
+      <div className="col-12 col-lg-3">
         <Card className="card-height-100">
           <Card.Header className="p-2">
             {$t({ id: "common.Most Kills" })}
           </Card.Header>
           <ul className="list-group list-group-flush">
             {weapons.topByKills.map((data) => (
-              <li key={data.name} className="list-group-item p-1">
+              <li key={data.name} className="list-group-item px-1 py-2">
                 <div className="align-items-center d-flex justify-content-between ">
-                  <Weapon name={data.name} size={18} />
+                  <Weapon name={data.name} size={22} />
                   <div>{data.kills}</div>
                 </div>
 
-                <div className="progress progress-sm mt-1">
+                <div className="progress progress-sm mt-2">
                   <div
                     className="progress-bar"
                     style={{ width: (data.kills / maxKills) * 100 + "%" }}
@@ -100,18 +117,18 @@ const Weapons: FC<WeaponsProps> = ({ weapons }) => {
           </ul>
         </Card>
       </div>
-      <div className="col-12 col-lg-4">
+      <div className="col-12 col-lg-3">
         <Card className="card-height-100">
           <Card.Header className="p-2">%{$t({ id: "common.HS" })}</Card.Header>
           <ul className="list-group list-group-flush">
             {weapons.topByHeadshot.map((data) => (
-              <li key={data.name} className="list-group-item p-1">
+              <li key={data.name} className="list-group-item px-1 py-2">
                 <div className="align-items-center d-flex justify-content-between">
-                  <Weapon name={data.name} size={18} />
+                  <Weapon name={data.name} size={22} />
                   <div>{data.hs.toFixed(0)}%</div>
                 </div>
 
-                <div className="progress progress-sm mt-1">
+                <div className="progress progress-sm mt-2">
                   <div
                     className="progress-bar"
                     style={{ width: data.hs + "%" }}

@@ -19,6 +19,8 @@ import classNames from "classnames";
 import { useIntl } from "react-intl";
 import { MATCH_MODE } from "@/app/consts";
 import { RANK_TITLE } from "@/components/Rank";
+import { format } from "date-fns";
+import annotationPlugin from "chartjs-plugin-annotation";
 
 ChartJS.register(
   CategoryScale,
@@ -29,7 +31,8 @@ ChartJS.register(
   Title,
   Tooltip,
   Legend,
-  Colors
+  Colors,
+  annotationPlugin
 );
 type RanksProps = {
   data: {
@@ -52,7 +55,6 @@ const Ranks: FC<RanksProps> = ({ data }) => {
   );
 
   const min = Math.min(...Object.values(ranks[type] || {}));
-  console.log("min", min);
   const max = Math.max(...Object.values(ranks[type] || {}));
   const isPremier = Number(MATCH_MODE.Premier) === Number(type);
 
@@ -107,6 +109,18 @@ const Ranks: FC<RanksProps> = ({ data }) => {
                         },
                       },
                     },
+                    annotation: {
+                      annotations: {
+                        label1: {
+                          type: "label",
+                          xMin: 0.5,
+                          xMax: 0.5,
+                          display: Object.keys(ranks[type] || {}).length === 0,
+                          color: "#878a99",
+                          content: [`You don't have a rank yet`],
+                        },
+                      },
+                    },
                   },
                   scales: {
                     x: {
@@ -156,7 +170,9 @@ const Ranks: FC<RanksProps> = ({ data }) => {
                   },
                 }}
                 data={{
-                  labels: Object.keys(ranks[type] || {}),
+                  labels: Object.keys(ranks[type] || {}).map((s) =>
+                    format(new Date(Number(s)), "yyyy-MM-dd")
+                  ),
                   datasets: [
                     {
                       label: $t({ id: "common.Rank" }),
@@ -215,7 +231,9 @@ const Ranks: FC<RanksProps> = ({ data }) => {
                   },
                 }}
                 data={{
-                  labels: Object.keys(matches[type] || {}),
+                  labels: Object.keys(matches[type] || {}).map((s) =>
+                    format(new Date(Number(s)), "yyyy-MM-dd")
+                  ),
                   datasets: [
                     {
                       label: $t({ id: "common.Matches" }),

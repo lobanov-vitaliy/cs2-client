@@ -4,6 +4,7 @@ import classNames from "classnames";
 import Image from "next/image";
 import getIntl from "@/components/providers/ServerIntlProvider/intl";
 import { CompetitiveRank } from "@/components/Rank";
+import { seconds2timestring } from "@/app/utils/time";
 
 type MapsProps = {
   maps: Array<{
@@ -15,6 +16,7 @@ type MapsProps = {
     headshots: number;
     wins: number;
     rank: number;
+    duration: number;
   }>;
 };
 

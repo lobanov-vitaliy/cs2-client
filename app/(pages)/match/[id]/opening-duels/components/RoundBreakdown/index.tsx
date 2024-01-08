@@ -70,7 +70,13 @@ const RoundBreakdown: FC<{ roundBreakdown: any[] }> = ({ roundBreakdown }) => {
                     </div>
                   </td>
                   <td className="text-center">
-                    {round.attacker.team_number === 3 ? "CT" : "T"}
+                    <img
+                      width={32}
+                      alt="team number"
+                      src={`/assets/icons/${
+                        round.attacker.team_number === 3 ? "ct" : "t"
+                      }.webp`}
+                    />
                   </td>
                   <td className="text-center">
                     <Weapon name={round.attacker.weapon} />
@@ -92,7 +98,13 @@ const RoundBreakdown: FC<{ roundBreakdown: any[] }> = ({ roundBreakdown }) => {
                     </div>
                   </td>
                   <td className="text-center">
-                    {round.user.team_number === 3 ? "CT" : "T"}
+                    <img
+                      width={32}
+                      alt="team number"
+                      src={`/assets/icons/${
+                        round.attacker.team_number === 3 ? "ct" : "t"
+                      }.webp`}
+                    />
                   </td>
                   <td className="text-center">
                     {seconds2timestring(round.round_time)}

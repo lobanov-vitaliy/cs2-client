@@ -3,7 +3,7 @@ import Card from "@/app/components/Card";
 import classNames from "classnames";
 import Image from "next/image";
 import { format } from "date-fns";
-import { getMapTitle } from "@/app/utils/match";
+import { getMapTitle, getMatchModeTranslateKey } from "@/app/utils/match";
 import Link from "next/link";
 import getIntl from "@/components/providers/ServerIntlProvider/intl";
 import { MATCH_MODE } from "@/app/consts";
@@ -54,11 +54,14 @@ const RecentMatches: FC<RecentMatchesProps> = async ({ matches }) => {
             href={`/match/${match.match_id}`}
             className="col-lg-4 col-md-12"
           >
-            <Card animate>
+            <Card>
               <Card.Header className="d-flex justify-content-between">
                 <span>
                   {format(new Date(match.datetime), "yyyy-MM-dd HH:mm")}
                 </span>
+                {$t({
+                  id: getMatchModeTranslateKey(match.match_making_mode),
+                })}
               </Card.Header>
               <Card.Body
                 style={{
@@ -93,7 +96,7 @@ const RecentMatches: FC<RecentMatchesProps> = async ({ matches }) => {
               </Card.Body>
 
               <Card.Footer>
-                <div className="align-items-center justify-content-between fs-5 d-flex gap-1">
+                <div className="align-items-center justify-content-between d-flex gap-1">
                   <span className="text-center">
                     {$t({ id: "common.KDA" })}:{" "}
                     {[match.kills, match.deaths, match.assists].join("/")}

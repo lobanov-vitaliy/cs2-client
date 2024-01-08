@@ -143,10 +143,12 @@ const Economy: FC<EconomyProps> = ({ rounds, economy }) => {
             types.forEach((type) => {
               const min = type.min / 5;
               const max = type.max / 5;
-              if (
-                (type.name === "pistol" && isPistolRound(round.round_number)) ||
-                (playerEconomy.equip_value > min &&
-                  playerEconomy.equip_value <= max)
+              if (type.name === "pistol" && isPistolRound(round.round_number)) {
+                economy["pistol"] = (economy["pistol"] || 0) + 1;
+              } else if (
+                !isPistolRound(round.round_number) &&
+                playerEconomy.equip_value > min &&
+                playerEconomy.equip_value <= max
               ) {
                 economy[type.name] = (economy[type.name] || 0) + 1;
               }

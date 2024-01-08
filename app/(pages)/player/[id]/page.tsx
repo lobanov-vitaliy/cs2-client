@@ -13,11 +13,13 @@ import getIntl from "@/components/providers/ServerIntlProvider/intl";
 import { notFound } from "next/navigation";
 import Weapons from "./components/Weapons";
 import Ranks from "./components/Ranks";
+import { request } from "@/app/utils/request";
+import Accuracy from "./components/Accuracy";
 
 export const dynamic = "force-dynamic";
 
 async function getProfile(id: string) {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/player/${id}`);
+  const res = await request(`${process.env.NEXT_PUBLIC_API_URL}/player/${id}`);
   if (!res.ok) {
     notFound();
   }
@@ -25,41 +27,41 @@ async function getProfile(id: string) {
 }
 
 async function getMatches(id: string) {
-  const res = await fetch(
+  const res = await request(
     `${process.env.NEXT_PUBLIC_API_URL}/player/${id}/matches?limit=3`
   );
   return res.json();
 }
 
 async function getTeammates(id: string) {
-  const res = await fetch(
+  const res = await request(
     `${process.env.NEXT_PUBLIC_API_URL}/player/${id}/teammates`
   );
   return res.json();
 }
 
 async function getMaps(id: string) {
-  const res = await fetch(
+  const res = await request(
     `${process.env.NEXT_PUBLIC_API_URL}/player/${id}/maps`
   );
   return res.json();
 }
 
 async function getClutches(id: string) {
-  const res = await fetch(
+  const res = await request(
     `${process.env.NEXT_PUBLIC_API_URL}/player/${id}/clutches`
   );
   return res.json();
 }
 
 async function getWeapons(id: string) {
-  const res = await fetch(
+  const res = await request(
     `${process.env.NEXT_PUBLIC_API_URL}/player/${id}/weapons`
   );
   return res.json();
 }
 async function getRanks(id: string) {
-  const res = await fetch(
+  const res = await request(
     `${process.env.NEXT_PUBLIC_API_URL}/player/${id}/ranks`
   );
   return res.json();
@@ -108,15 +110,27 @@ export default async function PlayerProfilePage({
           </div>
         </div>
       </div>
-      <h2 className="text-uppercase">{$t({ id: "common.Stats Overview" })}</h2>
+      <h2 className="text-uppercase">
+        <i className="mdi mdi-chart-bar me-2" />
+        {$t({ id: "common.Stats Overview" })}
+      </h2>
       <StatsOverview profile={profile} />
-
-      <h2 className="text-uppercase">{$t({ id: "common.Recent Matches" })}</h2>
+      <h2 className="text-uppercase">
+        <i className="mdi mdi-cast-variant me-2" />
+        {$t({ id: "common.Recent Matches" })}
+      </h2>
       <RecentMatches matches={matches.data} />
-
+      <h2 className="text-uppercase">
+        <i className="mdi mdi-podium me-2" />
+        {$t({ id: "common.Rank" })}
+      </h2>
+      <Ranks data={ranks} />
       <div className="row">
-        <div className="col-12 col-lg-4">
-          <h2 className="text-uppercase">{$t({ id: "common.Friends" })}</h2>
+        <div className="col-12 col-lg-3">
+          <h2 className="text-uppercase">
+            <i className="mdi mdi-account-group me-2" />
+            {$t({ id: "common.Friends" })}
+          </h2>
           <Card className="flex-grow-1">
             <div data-simplebar>
               <div
@@ -185,29 +199,35 @@ export default async function PlayerProfilePage({
             </div>
           </Card>
         </div>
-        <div className="col-12 col-lg-8">
-          <h2 className="text-uppercase">{$t({ id: "common.Clutches" })}</h2>
+        <div className="col-12 col-lg-9">
+          <h2 className="text-uppercase">
+            <i className="mdi mdi-adjust me-2" />
+            {$t({ id: "common.Clutches" })}
+          </h2>
           <Clutches clutches={clutches} />
         </div>
       </div>
-
-      <h2 className="text-uppercase">{$t({ id: "common.Weapon" })}</h2>
+      <h2 className="text-uppercase">
+        <i className="mdi mdi-crosshairs-gps me-2" />
+        {$t({ id: "common.Weapon" })}
+      </h2>
       <Weapons weapons={weapons} />
-
-      <h2 className="text-uppercase">{$t({ id: "common.Rank" })}</h2>
-      <Ranks data={ranks} />
-
       <div className="row">
         <div className="col-12 col-xl-3">
-          <h2 className="text-uppercase">{$t({ id: "common.Maps Radar" })}</h2>
+          <h2 className="text-uppercase">
+            <i className="mdi mdi-radar me-2" />
+            {$t({ id: "common.Maps Radar" })}
+          </h2>
           <MapsRadar maps={maps} />
         </div>
         <div className="col-12 col-xl-9">
-          <h2 className="text-uppercase">{$t({ id: "common.Maps" })}</h2>
+          <h2 className="text-uppercase">
+            <i className="mdi mdi-map-marker-star me-2" />
+            {$t({ id: "common.Maps" })}
+          </h2>
           <Maps maps={maps} />
         </div>
       </div>
-
       <MathesHistory id={id} maps={maps} />
     </div>
   );

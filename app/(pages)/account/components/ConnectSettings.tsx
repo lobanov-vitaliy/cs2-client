@@ -19,8 +19,6 @@ const ConnectSettings = () => {
   });
   const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
 
-  console.log("errors", errors);
-
   return (
     <Card>
       <Card.Body>

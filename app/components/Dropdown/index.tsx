@@ -1,11 +1,11 @@
 "use client";
 
 import Select from "react-select";
-import { FC } from "react";
+import { FC, ReactElement } from "react";
 
 type OptionType = {
   value: string;
-  label: string;
+  label: ReactElement;
   color?: string;
 };
 

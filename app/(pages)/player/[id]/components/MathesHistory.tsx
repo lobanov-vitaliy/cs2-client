@@ -5,7 +5,7 @@ import Card from "@/app/components/Card";
 import classNames from "classnames";
 import Image from "next/image";
 import { format } from "date-fns";
-import { getMapTitle } from "@/app/utils/match";
+import { getMapTitle, getMatchModeTranslateKey } from "@/app/utils/match";
 import { RankByMatchMode } from "@/components/Rank";
 import { useIntl } from "react-intl";
 import Dropdown from "@/components/Dropdown";
@@ -69,7 +69,10 @@ const MathesHistory: FC<MathesHistoryProps> = ({ id, maps }) => {
   return (
     <>
       <div className="align-items-end mb-2 d-flex justify-content-between">
-        <h2 className="text-uppercase mb-0">{$t({ id: "common.Matches" })}</h2>
+        <h2 className="text-uppercase mb-0">
+          <i className="mdi mdi-monitor-multiple me-2" />
+          {$t({ id: "common.Matches" })}
+        </h2>
         <div className="align-content-center d-flex gap-1">
           <Dropdown
             isMulti
@@ -78,7 +81,7 @@ const MathesHistory: FC<MathesHistoryProps> = ({ id, maps }) => {
             onChange={setMapSelected}
             options={maps.map((map: any) => ({
               value: map.map_name,
-              label: getMapTitle(map.map_name),
+              label: <>{getMapTitle(map.map_name)}</>,
             }))}
           />
           {/* {teammates.length > 0 && (
@@ -155,12 +158,21 @@ const MathesHistory: FC<MathesHistoryProps> = ({ id, maps }) => {
                     <td>
                       <div className="d-flex align-items-center gap-2">
                         <Image
-                          width={24}
-                          height={24}
+                          width={32}
+                          height={32}
                           src={`/assets/maps/map_icon_${match.map_name}.svg`}
                           alt={match.map_name}
                         />
-                        {getMapTitle(match.map_name)}
+                        <div>
+                          <div>{getMapTitle(match.map_name)}</div>
+                          <div className="text-muted" style={{ fontSize: 10 }}>
+                            {$t({
+                              id: getMatchModeTranslateKey(
+                                match.match_making_mode
+                              ),
+                            })}
+                          </div>
+                        </div>
                       </div>
                     </td>
                     <td>

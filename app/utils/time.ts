@@ -1,4 +1,4 @@
-import { intervalToDuration } from "date-fns";
+import { daysInWeek, intervalToDuration } from "date-fns";
 
 export const seconds2timestring = (value: number) => {
   const duration = intervalToDuration({
