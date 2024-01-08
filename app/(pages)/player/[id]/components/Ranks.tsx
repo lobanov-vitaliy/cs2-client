@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useState } from "react";
+import { FC, useMemo, useState } from "react";
 import Card from "@/app/components/Card";
 import {
   Chart as ChartJS,
@@ -35,10 +35,11 @@ ChartJS.register(
   annotationPlugin
 );
 type RanksProps = {
-  data: {
-    ranks: Record<string, Record<number, number>>;
-    matches: Record<string, Record<number, number>>;
-  };
+  data: Array<{
+    rank: number;
+    datetime: string;
+    mode: number;
+  }>;
 };
 
 const items: any = {
@@ -48,8 +49,31 @@ const items: any = {
 };
 
 const Ranks: FC<RanksProps> = ({ data }) => {
-  const { ranks, matches } = data;
   const { $t } = useIntl();
+  const [ranks, matches] = useMemo(() => {
+    const ranks: Record<number, Record<string, number>> = {};
+    const matches: Record<number, Record<string, number>> = {};
+    data.forEach((item) => {
+      if (item.mode) {
+        if (!ranks[item.mode]) {
+          ranks[item.mode] = {};
+        }
+
+        if (!matches[item.mode]) {
+          matches[item.mode] = {};
+        }
+
+        if (item.rank) {
+          ranks[item.mode][new Date(item.datetime).valueOf()] = item.rank;
+        }
+        const date = format(new Date(item.datetime), "yyyy-MM-dd");
+        matches[item.mode][date] = (matches[item.mode][date] || 0) + 1;
+      }
+    });
+
+    return [ranks, matches];
+  }, [data]);
+
   const [type, setType] = useState(
     Number(Object.keys(ranks).shift()) || MATCH_MODE.Competitive
   );
@@ -171,7 +195,7 @@ const Ranks: FC<RanksProps> = ({ data }) => {
                 }}
                 data={{
                   labels: Object.keys(ranks[type] || {}).map((s) =>
-                    format(new Date(Number(s)), "yyyy-MM-dd")
+                    format(new Date(Number(s)), "yyyy-MM-dd HH:mm")
                   ),
                   datasets: [
                     {
@@ -231,9 +255,7 @@ const Ranks: FC<RanksProps> = ({ data }) => {
                   },
                 }}
                 data={{
-                  labels: Object.keys(matches[type] || {}).map((s) =>
-                    format(new Date(Number(s)), "yyyy-MM-dd")
-                  ),
+                  labels: Object.keys(matches[type] || {}),
                   datasets: [
                     {
                       label: $t({ id: "common.Matches" }),

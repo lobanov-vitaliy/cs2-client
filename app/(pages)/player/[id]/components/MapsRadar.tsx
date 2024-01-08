@@ -36,35 +36,6 @@ const MapsRadar: FC<MapsRadarProps> = ({ maps }) => {
     ...maps.map((map) => map.matches)
   );
 
-  console.log({
-    labels: maps.map((map) => map.map_name),
-    datasets: [
-      {
-        label: $t({ id: "common.Matches" }),
-        data: maps.map((map) => (map.matches / max) * 100),
-        backgroundColor: "rgba(255, 255, 255, 0.05)",
-        borderColor: "rgba(255, 255, 255, 0.3)",
-        borderWidth: 1,
-        pointStyle: false,
-      },
-      {
-        label: $t({ id: "common.Defeat" }),
-        data: maps.map((map) => ((map.matches - map.wins) / max) * 100),
-        backgroundColor: "rgba(237, 94, 94, 0.4)",
-        borderColor: "rgba(237, 94, 94, 0.8)",
-        borderWidth: 1,
-        pointStyle: false,
-      },
-      {
-        label: $t({ id: "common.Victory" }),
-        data: maps.map((map) => (map.wins / max) * 100),
-        backgroundColor: "rgba(19, 197, 107, 0.4)",
-        borderColor: "rgba(19, 197, 107, 0.8)",
-        borderWidth: 1,
-        pointStyle: false,
-      },
-    ],
-  });
   return (
     <Card>
       <div style={{ height: 300 }} className="p-1">
