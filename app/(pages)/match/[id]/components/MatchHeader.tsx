@@ -7,7 +7,6 @@ import { FC } from "react";
 import MatchNavigation from "./MatchNavigation";
 import { format } from "date-fns";
 import { useIntl } from "react-intl";
-import { seconds2timestring } from "@/app/utils/time";
 
 const MatchHeader: FC<{ match: any }> = ({ match }) => {
   const { $t } = useIntl();

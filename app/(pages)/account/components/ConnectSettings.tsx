@@ -21,9 +21,11 @@ const ConnectSettings = () => {
 
   return (
     <Card>
+      <Card.Header>
+        <div className="fs-4">Automatic Match Tracking</div>
+      </Card.Header>
       <Card.Body>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="fs-4 pb-4">Automatic Match Tracking</div>
+        <form onSubmit={handleSubmit(onSubmit)} className="was-validated">
           <p className="fs-5">
             {`Authentication Code Log in with your Steam account on this page. Scroll down to "Access to Your Match History" and copy the "Authentication Code". If it's not there yet, click "Create Authentication Code" to generate one.`}
           </p>
@@ -68,8 +70,8 @@ const ConnectSettings = () => {
               })}
             />
           </div>
+          <Button type="submit">Connect Matchmaking</Button>
         </form>
-        <Button>Connect Matchmaking</Button>
       </Card.Body>
     </Card>
   );

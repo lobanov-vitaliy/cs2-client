@@ -132,7 +132,7 @@ const Rounds: FC<RoundsProps> = ({ rounds }) => {
                   </div>
                 </div>
                 {isSwapRound && (
-                  <div className="mdi mdi-reload fs-5 d-flex justify-content-center align-items-center" />
+                  <div className="mdi mdi-rotate-3d-variant fs-5 d-flex justify-content-center align-items-center" />
                 )}
 
                 {i === rounds.length - 1 && (

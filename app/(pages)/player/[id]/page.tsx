@@ -132,7 +132,7 @@ export default async function PlayerProfilePage({
             {$t({ id: "common.Friends" })}
           </h2>
           <Card className="flex-grow-1">
-            <div data-simplebar>
+            <div>
               <div
                 className={classNames("list-group list-group-flush", {
                   "align-items-center d-flex justify-content-center text-center":

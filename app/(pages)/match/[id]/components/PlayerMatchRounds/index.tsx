@@ -159,7 +159,7 @@ const PlayerMatchRounds: FC<PlayerMatchRoundsType> = ({ player_id, match }) => {
               </div>
             </div>
             {isSwapRound && (
-              <div className="mdi mdi-reload fs-5 d-flex justify-content-center align-items-center" />
+              <div className="mdi mdi-rotate-3d-variant fs-5 d-flex justify-content-center align-items-center" />
             )}
             {i === data.rounds.length - 1 && (
               <div className="mdi mdi-trophy fs-5 d-flex justify-content-center align-items-center" />

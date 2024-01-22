@@ -231,6 +231,7 @@ const RoundInfo: FC<{ round: number; match: any }> = ({ round, match }) => {
             </div>
           );
         }
+
         if (timeline.event === "round-end") {
           return (
             <div key={timeline.event} className="text-center">

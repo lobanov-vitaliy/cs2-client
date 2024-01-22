@@ -51,7 +51,7 @@ const User = () => {
                   {$t({ id: "common.Profile" })}
                 </span>
               </Link>
-              {/* <Link
+              <Link
                 className="dropdown-item"
                 href={`/account`}
                 onClick={() => {
@@ -62,7 +62,7 @@ const User = () => {
                 <span className="align-middle">
                   {$t({ id: "common.Account Settings" })}
                 </span>
-              </Link> */}
+              </Link>
               <div className="dropdown-divider"></div>
               <a
                 className="dropdown-item cursor-pointer"
